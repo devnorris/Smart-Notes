@@ -1,18 +1,17 @@
 "use strict";
 
-const express = require('express');
-const router  = express.Router();
+const express = require("express");
+const router = express.Router();
 
-module.exports = (knex) => {
-
+module.exports = knex => {
   router.get("/", (req, res) => {
     knex
       .select("*")
       .from("users")
-      .then((results) => {
+      .then(results => {
         res.json(results);
-    });
+      });
   });
-
+  console.log("page loaded, add code");
   return router;
-}
+};

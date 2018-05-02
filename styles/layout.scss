@@ -1,7 +1,45 @@
+@import 'usersHome';
+@import 'register';
+
+
+
 body {
   background-color: #EEE;
+  
 
   h1 {
     color: #244751;
   }
+}
+
+.inputTodo {
+  width: 80%;
+  text-align: center;
+  height: 40%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+.categories {
+  width: 80%;
+  margin: auto;
+  display: inline-flex;
+  background-color: lightgreen;
+}
+
+.categories .watchDisplay{
+  width: 20%;
+  height: 80%;
+  background-color: white;
+  color: cadetblue;
+  margin: 10px;
+}
+
+
+.categories .merchDisplay{
+  width: 20%;
+  height: 80%;
+  background-color: white;
+  color: rgb(22, 155, 160);
+  margin: 10px;
 }
