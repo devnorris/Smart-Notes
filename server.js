@@ -19,8 +19,19 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-imdb.get('The Toxic Avenger', {apiKey: 'b1b27127', timeout: 30000})
-.then(console.log).catch(console.log);
+
+// Accessing IMDB hardCoded movies
+
+function findMovie() {
+  imdb.search({
+  title: 'Toxic Avenger'
+}, {
+  apiKey: 'b1b27127'
+}).then(console.log).catch(console.log);
+
+}
+
+findMovie();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
