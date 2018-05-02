@@ -9,13 +9,15 @@
   <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
 <body>
+    <% include partials/_header %>
   <div class="inputTodo">
-    <span>
-      What are we doing? 
+    <form>
+      What are we doing? <br>
       <input class="search">
-    </span>
+      <button class="submit">GO</button>
+    </form>
   </div>
-  
+
   <div class="categories"> 
   <div class="watchDisplay">Latest <b>cinematic</b> entries</div>
   <div class="foodDisplay">Latest <b>restauration</b> entries</div>
