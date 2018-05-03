@@ -12,6 +12,7 @@ $(() => {
 });
 
 $(document).ready(function() {
+  console.log("knex", knex.development.connection.database);
   //we will use variables in this  event listener to fill in every paragraph(which will contain
   //the new entries)
   $(".categories").on("click", ".movies", function() {
