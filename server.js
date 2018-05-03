@@ -19,6 +19,14 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+
+const awsId       = process.env.awsId;
+const awsSecret   = process.env.awsSecret;
+
+const IMbdKey     = process.env.IMbdKey;
+
+const yelpKey     = process.env.yelpKey;
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -29,7 +37,7 @@ function findMovie() {
   imdb.search({
   title: 'Lost in Space'
 }, {
-  apiKey: 'b1b27127'
+  apiKey: IMbdKey
 }).then(console.log).catch(console.log);
 }
 
@@ -39,18 +47,14 @@ findMovie();
 // AMAZON
 
 var client = amazon.createClient({
-  awsId: "AKIAJHKSTWB2FNG277KQ",
-  awsSecret: "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",
+  awsId: awsId,
+  awsSecret: awsSecret,
   awsTag: "aws Tag"
 });
 
 
 client.itemSearch({
   director: 'Quentin Tarantino',
-  actor: 'Samuel L. Jackson',
-  searchIndex: 'DVD',
-  audienceRating: 'R',
-  responseGroup: 'ItemAttributes,Offers,Images'
 }, function(err, results, response) {
   if (err) {
     console.log(err);
@@ -67,7 +71,7 @@ var options = {
   url: "https://api.yelp.com/v3/businesses/WavvLdfdP6g8aZTtbBQHTw", // /WavvLdfdP6g8aZTtbBQHTw -> this will need to be replaced with the ID or the name of the business somehow
   method: "GET",
   headers: {
-  Authorization: 'Bearer ljvAkdySd47VOtVuRevvA2gDzWV7HY_ygpueNz8upFoAxREDaKk9PFPqaIzUvnzWIqV1pbah3RyJRldy5JZm3HnNR28Ywfnah9gP_orRGh31nshwVNccAP5D-jnrWnYx'
+  Authorization: 'Bearer yelpKey'
   }
 };
 
