@@ -43,13 +43,18 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  console.log("loaded add code");
+  console.log("req params:", req.params);
   res.render("index");
 });
 
 app.get("/register", (req, res) => {
+  console.log("req body:", req.body)
   res.render("register");
 });
+
+app.post("/register", (req, res) => {
+
+})
 
 app.get("/smart", (req, res) => {
   console.log("user logged in and verified");
