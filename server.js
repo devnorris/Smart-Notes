@@ -25,6 +25,8 @@ app.use(morgan("dev"));
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
+
+
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -43,8 +45,23 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  console.log("req params:", req.params);
-  res.render("index");
+
+knex((err) => {
+  if (err) {
+    return console.error("Connection Error", err);
+  }
+  knex.query("SELECT $1::int AS number", ["1"], (err, result) => {
+    //"SELECT * FROM  famous_people", (err, result) =>
+    if (err) {
+      return console.error("error running query", err);
+    }
+    //console.log("result", result.rows[0].first_name);
+    console.log(result.rows[0].number); //output: 1
+    knex.connection.end();
+  });
+});
+  console.log("knex:", knexConfig.development.connection.database.users);
+  res.redirect("/smart");
 });
 
 app.get("/register", (req, res) => {
