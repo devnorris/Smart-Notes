@@ -14,15 +14,15 @@
   <!-- <% include partials/_header %> -->
   <div class="container">
     <p>LOGIN OR REGISTER BELOW</p>
-    <form>
+    <form class="loginForm" method="post" action="/login">
       <p>Login</p>
-      Email: <input type="email">
-      Password: <input type="password">
+      Email: <input name="email" type="email">
+      Password: <input name="password" type="password">
       <button type="submit">login</button>
     </form>
     toggle form below when clicking <button>register</button>
-    <form>
-      <p>Login</p>
+    <form class="toggleForm" method="POST" action="/register">
+      <p>Register</p>
       Email: <input type="email">
       Password: <input type="password">
       <button type="submit">JOIN</button>
