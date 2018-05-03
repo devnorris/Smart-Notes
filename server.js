@@ -35,12 +35,29 @@ function findMovie() {
 
 findMovie();
 
+
 // AMAZON
 
 var client = amazon.createClient({
   awsId: "AKIAJHKSTWB2FNG277KQ",
   awsSecret: "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",
   awsTag: "aws Tag"
+});
+
+
+client.itemSearch({
+  director: 'Quentin Tarantino',
+  actor: 'Samuel L. Jackson',
+  searchIndex: 'DVD',
+  audienceRating: 'R',
+  responseGroup: 'ItemAttributes,Offers,Images'
+}, function(err, results, response) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(results);  // products (Array of Object)
+    console.log(response); // response (Array where the first element is an Object that contains Request, Item, etc.)
+  }
 });
 
 
