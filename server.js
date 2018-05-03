@@ -36,14 +36,30 @@ function findMovie() {
 }
 
 // findMovie();
+const findId = () => {
+  //in case we can't autoincrement
+};
 
+const addUser = (req, res) => {
+  knex("users") //we need to refactor the user_id key that autoincrements id
+    .insert({
+      user_id: 5,
+      email: req.body.email,
+      password: req.body.password
+    })
+    .then(console.log("done"))
+    .catch(err => console.log("error: ", err))
+    .finally(() => {
+      knex.destroy();
+    });
+};
 
 knex("midterm")
- .select()
- .from("users")
- .then(result => {
-   console.log("done", result);
- });
+  .select()
+  .from("users")
+  .then(result => {
+    console.log("done", result);
+  });
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -80,7 +96,7 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  console.log("bod ", req.body);
+  res.redirect("/smart");
 });
 
 app.get("/smart", (req, res) => {
