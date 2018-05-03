@@ -23,64 +23,6 @@ const knexLogger  = require('knex-logger');
 const usersRoutes = require("./routes/users");
 
 
-// Accessing IMDB hardCoded movies
-
-function findMovie() {
-  imdb.search({
-  title: 'Lost in Space'
-}, {
-  apiKey: 'b1b27127'
-}).then(console.log).catch(console.log);
-}
-
-findMovie();
-
-
-// AMAZON
-
-var client = amazon.createClient({
-  awsId: "AKIAJHKSTWB2FNG277KQ",
-  awsSecret: "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",
-  awsTag: "aws Tag"
-});
-
-
-client.itemSearch({
-  director: 'Quentin Tarantino',
-  actor: 'Samuel L. Jackson',
-  searchIndex: 'DVD',
-  audienceRating: 'R',
-  responseGroup: 'ItemAttributes,Offers,Images'
-}, function(err, results, response) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(results);  // products (Array of Object)
-    console.log(response); // response (Array where the first element is an Object that contains Request, Item, etc.)
-  }
-});
-
-
-// YELP
-
-var options = {
-  url: "https://api.yelp.com/v3/businesses/WavvLdfdP6g8aZTtbBQHTw", // /WavvLdfdP6g8aZTtbBQHTw -> this will need to be replaced with the ID or the name of the business somehow
-  method: "GET",
-  headers: {
-  Authorization: 'Bearer ljvAkdySd47VOtVuRevvA2gDzWV7HY_ygpueNz8upFoAxREDaKk9PFPqaIzUvnzWIqV1pbah3RyJRldy5JZm3HnNR28Ywfnah9gP_orRGh31nshwVNccAP5D-jnrWnYx'
-  }
-};
-
-axios(options)
-.then(response => {
-  console.log(response.data);
-  console.log(response.status)
-})
-.catch(error => {
-  console.log("Oh No!");
-});
-
-
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
