@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Smart Registration</title>
+  <title>Smart Todo List</title>
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -10,9 +10,9 @@
   <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
 <body>
-    <% include partials/_header %>
+  <% include partials/_header %>
   <div class="container">
-    <form>
+    <form method="POST" action="/smart">
       <p>What are we doing? </p>
       <input class="search">
       <button type="submit" class="submit">GO</button>
@@ -20,10 +20,10 @@
   </div>
   <div class="categories">
     <div class="movies">Latest <b>cinematic</b> entries</div>
-  <div class="food">Latest <b>restauration</b> entries</div>
-  <div class="merch">Latest <b>merchandise</b> entries</div>
-  <div class="books">Latest <b>books</b> entries</div>
-</div>
+    <div class="food">Latest <b>restauration</b> entries</div>
+    <div class="merch">Latest <b>merchandise</b> entries</div>
+    <div class="books">Latest <b>books</b> entries</div>
+  </div>
 </body>
 <footer>No right reserved</footer>
 </html>

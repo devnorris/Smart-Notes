@@ -10,6 +10,9 @@
 
 .logButton{
   float: right;
+  &:hover{
+    filter: invert(110%);
+  }
 }
 
 .action{
@@ -22,6 +25,7 @@
   font-weight: bolder;
   font-size: 20px;
   vertical-align: text-bottom;
+  
 }
 }
 
@@ -41,12 +45,19 @@
 
 .search{
   width: 40%;
+  &:hover{
+    border-bottom: 2px solid;
+    border-color: rgba(0, 162, 255, 0.507);
+  }
   
 }
 .submit {
   color: white;
   background-color: tomato;
   border-radius: 10px;
+  &:hover{
+    filter: invert(110%);
+  }
 }
 p {
   font-weight: bolder;
