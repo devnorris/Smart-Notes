@@ -9,16 +9,61 @@ const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const app = express();
 
-const imdb = require('imdb-api');
+const imdb = require("imdb-api");
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const morgan = require("morgan");
+const knexLogger = require("knex-logger");
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
+<<<<<<< HEAD
+=======
+// Accessing IMDB hardCoded movies
+
+function findMovie() {
+  imdb
+    .search(
+      {
+        title: "Toxic Avenger"
+      },
+      {
+        apiKey: "b1b27127"
+      }
+    )
+    .then(console.log)
+    .catch(console.log);
+}
+
+// findMovie();
+const findId = () => {
+  //in case we can't autoincrement
+};
+
+const addUser = (req, res) => {
+  knex("users") //we need to refactor the user_id key that autoincrements id
+    .insert({
+      user_id: 5,
+      email: req.body.email,
+      password: req.body.password
+    })
+    .then(console.log("done"))
+    .catch(err => console.log("error: ", err))
+    .finally(() => {
+      knex.destroy();
+    });
+};
+
+knex("midterm")
+  .select()
+  .from("users")
+  .then(result => {
+    console.log("done", result);
+  });
+
+>>>>>>> b9d4963be9886a6cdeb6a2d7d2948d68b42b0772
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -45,7 +90,7 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  console.log("loaded add code");
+  console.log(knexConfig.development);
   res.render("index");
 });
 
@@ -53,11 +98,14 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
+app.post("/register", (req, res) => {
+  res.redirect("/smart");
+});
+
 app.get("/smart", (req, res) => {
   console.log("user logged in and verified");
   res.render("usersHome");
 });
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
