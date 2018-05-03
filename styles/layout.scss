@@ -1,7 +1,73 @@
+@import 'usersHome';
+@import 'register';
+
+
+
 body {
-  background-color: #EEE;
+  background-color: rgba(255, 255, 255, 0.933);
+  width: 100%;
+  
 
   h1 {
     color: #244751;
   }
+}
+.welcome{
+  width: 40%;
+  margin: auto;
+  text-align: center;
+}
+.inputTodo {
+  text-align: center;
+  height: 40%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+.logButton{
+  float: right;
+}
+
+.search {
+  width: 50%;
+  margin: auto;
+}
+.categories {
+  width: 100%;
+  margin: 10px 50px;
+  display: inline-flex;
+  background-color: lightgreen;
+  padding: 2%;
+}
+
+.categories .watchDisplay{
+  width: 20%;
+  height: 80%;
+  background-color: white;
+  color: cadetblue;
+  margin: 10px;
+}
+
+.categories .foodDisplay{
+  width: 20%;
+  height: 80%;
+  background-color: white;
+  color: rgb(41, 116, 119);
+  margin: 10px;
+}
+
+.categories .merchDisplay{
+  width: 20%;
+  height: 80%;
+  background-color: white;
+  color: rgb(22, 155, 160);
+  margin: 10px;
+}
+
+.categories .bookDisplay{
+  width: 20%;
+  height: 80%;
+  background-color: white;
+  color: rgb(102, 169, 172);
+  margin: 10px;
 }
