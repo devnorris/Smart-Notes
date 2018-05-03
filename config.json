@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "@btn-primary-color": "#ad0d58",
+    "@btn-primary-bg": "white"
+  },
+  "css": [
+    "buttons.less",
+    "navs.less"
+  ],
+  "js": [],
+  "customizerUrl": "<none>"
+}
