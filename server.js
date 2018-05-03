@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const app = express();
 
+const axios = require('axios');
 const imdb = require('imdb-api');
 
 const knexConfig  = require("./knexfile");
@@ -24,7 +25,7 @@ const usersRoutes = require("./routes/users");
 
 function findMovie() {
   imdb.search({
-  title: 'Toxic Avenger'
+  title: 'Lost in Space'
 }, {
   apiKey: 'b1b27127'
 }).then(console.log).catch(console.log);
@@ -32,6 +33,26 @@ function findMovie() {
 }
 
 findMovie();
+
+
+
+var options = {
+    url: "https://api.yelp.com/v3/businesses/WavvLdfdP6g8aZTtbBQHTw", // this will need to be replaced with the ID or the name of the business somehow
+    method: "GET",
+    headers: {
+    Authorization: 'Bearer ljvAkdySd47VOtVuRevvA2gDzWV7HY_ygpueNz8upFoAxREDaKk9PFPqaIzUvnzWIqV1pbah3RyJRldy5JZm3HnNR28Ywfnah9gP_orRGh31nshwVNccAP5D-jnrWnYx'
+    }
+  };
+
+axios(options)
+  .then(response => {
+    console.log(response.data);
+    console.log(response.status)
+  })
+  .catch(error => {
+    console.log("Oh No!");
+  });
+
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
