@@ -33,6 +33,14 @@ function findMovie() {
 
 findMovie();
 
+
+knex("midterm")
+ .select()
+ .from("users")
+ .then(result => {
+   console.log("done", result);
+ });
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -59,7 +67,7 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  console.log("loaded add code");
+  console.log(knexConfig.development);
   res.render("index");
 });
 
