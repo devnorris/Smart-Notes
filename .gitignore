@@ -1,5 +1,6 @@
 node_modules/
 public/styles
+TEST_Server.js
 .env
 *.log
 *.sqlite3
