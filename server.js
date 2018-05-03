@@ -2,15 +2,17 @@
 
 require("dotenv").config();
 
-const PORT = process.env.PORT || 8080;
-const ENV = process.env.ENV || "development";
-const express = require("express");
-const bodyParser = require("body-parser");
-const sass = require("node-sass-middleware");
-const app = express();
+const PORT        = process.env.PORT || 8080;
+const ENV         = process.env.ENV || "development";
+const express     = require("express");
+const bodyParser  = require("body-parser");
+const sass        = require("node-sass-middleware");
+const app         = express();
 
-const axios = require('axios');
-const imdb = require('imdb-api');
+const axios       = require('axios');
+const imdb        = require('imdb-api');
+var amazon        = require('amazon-product-api');
+
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -29,29 +31,37 @@ function findMovie() {
 }, {
   apiKey: 'b1b27127'
 }).then(console.log).catch(console.log);
-
 }
 
 findMovie();
 
+// AMAZON
 
+var client = amazon.createClient({
+  awsId: "AKIAJHKSTWB2FNG277KQ",
+  awsSecret: "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",
+  awsTag: "aws Tag"
+});
+
+
+// YELP
 
 var options = {
-    url: "https://api.yelp.com/v3/businesses/WavvLdfdP6g8aZTtbBQHTw", // this will need to be replaced with the ID or the name of the business somehow
-    method: "GET",
-    headers: {
-    Authorization: 'Bearer ljvAkdySd47VOtVuRevvA2gDzWV7HY_ygpueNz8upFoAxREDaKk9PFPqaIzUvnzWIqV1pbah3RyJRldy5JZm3HnNR28Ywfnah9gP_orRGh31nshwVNccAP5D-jnrWnYx'
-    }
-  };
+  url: "https://api.yelp.com/v3/businesses/WavvLdfdP6g8aZTtbBQHTw", // /WavvLdfdP6g8aZTtbBQHTw -> this will need to be replaced with the ID or the name of the business somehow
+  method: "GET",
+  headers: {
+  Authorization: 'Bearer ljvAkdySd47VOtVuRevvA2gDzWV7HY_ygpueNz8upFoAxREDaKk9PFPqaIzUvnzWIqV1pbah3RyJRldy5JZm3HnNR28Ywfnah9gP_orRGh31nshwVNccAP5D-jnrWnYx'
+  }
+};
 
 axios(options)
-  .then(response => {
-    console.log(response.data);
-    console.log(response.status)
-  })
-  .catch(error => {
-    console.log("Oh No!");
-  });
+.then(response => {
+  console.log(response.data);
+  console.log(response.status)
+})
+.catch(error => {
+  console.log("Oh No!");
+});
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT

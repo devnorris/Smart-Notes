@@ -12,6 +12,7 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "amazon-product-api": "^0.4.4",
     "axios": "^0.18.0",
     "body-parser": "^1.15.2",
     "bootstrap": "^4.1.1",

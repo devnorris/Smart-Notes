@@ -4,3 +4,9 @@ TEST_Server.js
 .env
 *.log
 *.sqlite3
+
+AMAZON Keys:
+Access Key ID:
+AKIAJHKSTWB2FNG277KQ
+Secret Access Key:
+v8bfPbAAnsL4U3f+QfAuE1pTtSVzL0pMOOkabOU3
