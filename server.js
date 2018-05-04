@@ -9,60 +9,59 @@ const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const app = express();
 
-const imdb = require('imdb-api');
-const axios = require('axios');
-const ebay = require('ebay-api');
+const imdb = require("imdb-api");
+const axios = require("axios");
+const ebay = require("ebay-api");
 
 const yelpKey = process.env.yelpKey;
 const ebayID = process.env.ebayID;
 const imdbKey = process.env.imdbKey;
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const morgan = require("morgan");
+const knexLogger = require("knex-logger");
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
 const yelpConfig = {
-  headers: {Authorization: yelpKey},
+  headers: { Authorization: yelpKey },
   params: {
-    name: '',
-    location: 'Montreal'
-      }
+    name: "",
+    location: "Montreal"
+  }
 };
 
 function findMovie(search) {
-  imdb.search({
-    title: search
-  },
-  { apiKey: imdbKey})
+  imdb
+    .search(
+      {
+        title: search
+      },
+      { apiKey: imdbKey }
+    )
     .then(result => {
       let movieArray = result.results;
-        for(let searchResult of movieArray) {
-          if (searchResult.title.toLowerCase() === search.toLowerCase()) {
-            console.log(searchResult.title + ' ' + searchResult.year);
-          }
+      for (let searchResult of movieArray) {
+        if (searchResult.title.toLowerCase() === search.toLowerCase()) {
+          console.log(searchResult.title + " " + searchResult.year);
         }
+      }
     })
     .catch(console.log);
-};
-
+}
 
 const confirmEntry = (array, input) => {
   for (let i = 0; i < 3; i++) {
     if (array[i].name.toLowerCase() === input.toLowerCase()) {
-      console.log(array[i].name);
+      return array[0].name;
       // console.log(array[i].location.address1);
     } else {
       console.log("Not found");
     }
   }
 };
-
-
-
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -98,10 +97,12 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  knex('users')
-    .insert({user_id: 5,
-             email: req.body.email,
-             password: req.body.password})
+  knex("users")
+    .insert({
+      user_id: 5,
+      email: req.body.email,
+      password: req.body.password
+    })
     .then(console.log("done"))
     .catch(err => console.log("error: ", err))
     .finally(() => {
@@ -116,101 +117,101 @@ app.get("/smart", (req, res) => {
   res.render("usersHome");
 });
 
-
 app.post("/smart", (req, res) => {
-// yelpConfig.params.term = req.body.search; // Find restaurants
-//   axios
-//     .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
-//     .then(response => {
-//       let businessList = response.data.businesses;
-//       confirmEntry(businessList, req.body.search);
-//     })
-//     .catch(error => {
-//       console.log("Error!");
-//     });
+  yelpConfig.params.term = req.body.search; // Find restaurants
+  axios
+    .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
+    .then(response => {
+      let businessList = response.data.businesses;
+      confirmEntry(businessList, req.body.search);
+      res.send();
+    })
+    .catch(error => {
+      console.log("Error!");
+    });
 
-// ----------------------------------------------------------------------------------------------------------
-  // const findMovie = search => { // Find movies
-  //   imdb.search({
-  //     title: `${req.body.search}`
-  //   }, {
-  //     apiKey: 'b1b27127'
-  //   }).then(result => {
-  //     let movieArray = result.results;
-  //       for(let searchResult of movieArray) {
-  //         if (searchResult.title.toLowerCase() === req.body.search.toLowerCase()) {
-  //           console.log(searchResult.title + ' ' + searchResult.year);
+  // ----------------------------------------------------------------------------------------------------------
+  // const findMovie = search => {
+  //   // Find movies
+  //   imdb
+  //     .search(
+  //       {
+  //         title: `${req.body.search}`
+  //       },
+  //       {
+  //         apiKey: "b1b27127"
+  //       }
+  //     )
+  //     .then(result => {
+  //       let movieArray = result.results;
+  //       for (let searchResult of movieArray) {
+  //         if (
+  //           searchResult.title.toLowerCase() === req.body.search.toLowerCase()
+  //         ) {
+  //           res.send(searchResult.title + " " + searchResult.year);
   //         }
   //       }
-  //   })
+  //     })
   //     .catch(console.log);
+  // };
+
+  // findMovie(req.body.search);
+
+  // // ---------------------------------------------------------------------------------------------------------------
+  // const paramsBooks = {
+  //   keywords: `${req.body.search}, Books`, // Search Ebay for Books
+  //   domainFilter: [{ name: "domainName", value: "Books" }]
+  // };
+
+  // ebay.xmlRequest(
+  //   {
+  //     serviceName: "Finding",
+  //     opType: "findItemsByKeywords",
+  //     appId: ebayID,
+  //     params: paramsBooks,
+  //     parser: ebay.parseResponseJson
+  //   },
+  //   // gets all the items together in a merged array
+  //   function itemsCallback(error, itemsResponse) {
+  //     if (error) throw error;
+
+  //     let items = itemsResponse.searchResult.item;
+
+  //     console.log("Found", items.length, "items");
+
+  //     for (let i = 0; i < items.length; i++) {
+  //       res.send(items[i].primaryCategory);
+  //       // console.log(items[i].primaryCategory);
+  //     }
   //   }
+  // );
+  // //---------------------------------------------------------------------------------------
 
-//findMovie(req.body.search);
+  // const paramsProduct = {
+  //   keywords: `${req.body.search}`, // Search Ebay for products
+  //   domainFilter: [{ name: "domainName", value: "Books" }]
+  // };
 
-// ---------------------------------------------------------------------------------------------------------------
-// const params = {
-//   keywords: `${req.body.search}, Books`, // Search Ebay for Books
-//   domainFilter: [
-//     {name: 'domainName', value: 'Books'}
-//   ]
-// };
+  // ebay.xmlRequest(
+  //   {
+  //     serviceName: "Finding",
+  //     opType: "findItemsByKeywords",
+  //     appId: ebayID,
+  //     params: paramsProduct,
+  //     parser: ebay.parseResponseJson
+  //   },
+  //   // gets all the items together in a merged array
+  //   function itemsCallback(error, itemsResponse) {
+  //     if (error) throw error;
 
-// ebay.xmlRequest({
-//     serviceName: 'Finding',
-//     opType: 'findItemsByKeywords',
-//     appId: ebayID,
-//     params: params,
-//     parser: ebay.parseResponseJson
-//   },
-//   // gets all the items together in a merged array
-//   function itemsCallback(error, itemsResponse) {
-//     if (error) throw error;
-
-//     let items = itemsResponse.searchResult.item;
-
-//     console.log('Found', items.length, 'items');
-
-//     for (let i = 0; i < items.length; i++) {
-
-//        console.log(items[i].primaryCategory);
-//   }
-// });
-//---------------------------------------------------------------------------------------
-
-const params = {
-  keywords: `${req.body.search}`, // Search Ebay for products
-  domainFilter: [
-    {name: 'domainName', value: 'Books'}
-  ]
-};
-
-ebay.xmlRequest({
-    serviceName: 'Finding',
-    opType: 'findItemsByKeywords',
-    appId: ebayID,
-    params: params,
-    parser: ebay.parseResponseJson
-  },
-  // gets all the items together in a merged array
-  function itemsCallback(error, itemsResponse) {
-    if (error) throw error;
-
-    let items = itemsResponse.searchResult.item;
-
-    console.log('Found', items.length, 'items');
-
-    for (let i = 0; i < items.length; i++) {
-
-       console.log(items[i].primaryCategory);
-  }
+  //     let items = itemsResponse.searchResult.item;
+  //     console.log("Found", items.length, "items");
+  //     //   for (let i = 0; i < items.length; i++) {}
+  //     res.send({ item: items[0] });
+  //   }
+  // );
 });
-
-});
-
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
-
