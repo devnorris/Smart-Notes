@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Smart Registration</title>
+  <title>Smart Todo</title>
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -11,20 +11,26 @@
 <body>
     <% include partials/_header %>
   <div class="inputTodo">
+      <p id="introText"><b>Quick! Type in the cool thing/place before you forget! We'll take care of sorting it </b></p>
     <form method="POST" action="/smart">
-      What are we doing? <br>
+
+        <br>
       <input class="search" name="search">
-      <button class="submit">GO</button>
+      <button class="submit">Sort for me, machine!</button>
     </form>
   </div>
 
+
   <div class="categories">
-  <div class="watchDisplay">Latest <b>cinematic</b> entries</div>
-  <div class="foodDisplay">Latest <b>restauration</b> entries</div>
-  <div class="merchDisplay">Latest <b>merchandise</b> entries</div>
-  <div class="bookDisplay">Latest <b>readings</b> entries</div>
+  <div class="watchDisplay"><b>Netflix and chill</b></div>
+  <div class="foodDisplay"><b>Mmmmm tasty food</b></div>
+  <div class="merchDisplay"><b>I will (probably) buy this one day</b></div>
+  <div class="bookDisplay"><b>My sweet book list</b></div>
 </div>
 
 
 </body>
 </html>
+
+
+<!-- Main page when user logged in -->
