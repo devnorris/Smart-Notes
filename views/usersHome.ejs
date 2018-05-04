@@ -11,20 +11,20 @@
 <body>
     <% include partials/_header %>
   <div class="inputTodo">
-    <form>
+    <form method="POST" action="/smart">
       What are we doing? <br>
-      <input class="search">
+      <input class="search" name="search">
       <button class="submit">GO</button>
     </form>
   </div>
 
-  <div class="categories"> 
+  <div class="categories">
   <div class="watchDisplay">Latest <b>cinematic</b> entries</div>
   <div class="foodDisplay">Latest <b>restauration</b> entries</div>
   <div class="merchDisplay">Latest <b>merchandise</b> entries</div>
   <div class="bookDisplay">Latest <b>readings</b> entries</div>
 </div>
-  
-  
+
+
 </body>
 </html>

@@ -12,9 +12,11 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.15.2",
     "bootstrap": "^4.1.1",
     "dotenv": "^2.0.0",
+    "ebay-api": "^1.13.7",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "imdb-api": "^3.1.2",
@@ -23,7 +25,8 @@
     "morgan": "^1.7.0",
     "node-sass-middleware": "^0.9.8",
     "pg": "^6.0.2",
-    "yarn": "^1.6.0"
+    "y": "^0.3.2",
+    "yelp": "^1.0.2"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"
