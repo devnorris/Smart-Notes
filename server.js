@@ -118,100 +118,107 @@ app.get("/smart", (req, res) => {
 });
 
 app.post("/smart", (req, res) => {
-  yelpConfig.params.term = req.body.search; // Find restaurants
-  let foodResults = { class: "foodDisplay", value: "" };
+  let anchorWord = req.body.search.split(" ")[0].toLowerCase();
+  let taskAdded = req.body.search
+    .split(" ")
+    .slice(1)
+    .join(" ")
+    .toLowerCase();
+  let responseObj = { keyword: anchorWord, value: taskAdded };
+  if (anchorWord === "eat") {
+    yelpConfig.params.term = taskAdded; // Find restaurants
+    let foodResults = { class: "foodDisplay", value: "" };
 
-  axios
-    .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
-    .then(response => {
-      let businessList = response.data.businesses;
-      // console.log(businessList[i].location.address1);
-      foodResults.value = businessList[0].name;
-    })
-    .catch(error => {
-      console.log("Error!");
-    });
-
-  // ----------------------------------------------------------------------------------------------------------
-  let watchResult = { class: "watchDisplay", value: "" };
-  const findMovie = search => {
-    // Find movies
-    imdb
-      .search(
-        {
-          title: `${req.body.search}`
-        },
-        {
-          apiKey: "b1b27127"
-        }
-      )
-      .then(result => {
-        let movieArray = result.results;
-        for (let searchResult of movieArray) {
-          if (
-            searchResult.title.toLowerCase() === req.body.search.toLowerCase()
-          ) {
-            watchResult.value = searchResult.title + " " + searchResult.year;
-          }
-        }
+    axios
+      .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
+      .then(response => {
+        let businessList = response.data.businesses;
+        console.log(businessList[0].name);
+        foodResults.value = businessList[0].name;
+        console.log(businessList[0].name);
       })
-      .catch(console.log);
-  };
+      .catch(error => {
+        console.log("Error!");
+      });
+  }
+  // // ----------------------------------------------------------------------------------------------------------
+  else if (anchorWord === "watch") {
+    let watchResult = { class: "watchDisplay", value: "" };
+    const findMovie = search => {
+      // Find movies
+      imdb
+        .search(
+          {
+            title: `${taskAdded}`
+          },
+          {
+            apiKey: "b1b27127"
+          }
+        )
+        .then(result => {
+          let movieArray = result.results;
+          for (let searchResult of movieArray) {
+            if (searchResult.title.toLowerCase() === taskAdded.toLowerCase()) {
+              watchResult.value = searchResult.title + " " + searchResult.year;
+              console.log("caught", searchResult.title);
+            }
+          }
+        })
+        .catch(console.log);
+    };
 
-  findMovie(req.body.search);
+    findMovie(taskAdded);
+  } else if (anchorWord === "read") {
+    const paramsBooks = {
+      keywords: `${taskAdded}, Books`, // Search Ebay for Books
+      domainFilter: [{ name: "domainName", value: "Books" }]
+    };
+    let bookResults = { class: "bookDisplay", value: "" };
 
-  // // ---------------------------------------------------------------------------------------------------------------
-  const paramsBooks = {
-    keywords: `${req.body.search}, Books`, // Search Ebay for Books
-    domainFilter: [{ name: "domainName", value: "Books" }]
-  };
-  let bookResults = { class: "bookDisplay", value: "" };
+    ebay.xmlRequest(
+      {
+        serviceName: "Finding",
+        opType: "findItemsByKeywords",
+        appId: ebayID,
+        params: paramsBooks,
+        parser: ebay.parseResponseJson
+      },
+      // gets all the items together in a merged array
+      function itemsCallback(error, itemsResponse) {
+        if (error) throw error;
 
-  ebay.xmlRequest(
-    {
-      serviceName: "Finding",
-      opType: "findItemsByKeywords",
-      appId: ebayID,
-      params: paramsBooks,
-      parser: ebay.parseResponseJson
-    },
-    // gets all the items together in a merged array
-    function itemsCallback(error, itemsResponse) {
-      if (error) throw error;
+        let items = itemsResponse.searchResult.item;
+        // bookResults.value = items[0].title;
 
-      let items = itemsResponse.searchResult.item;
-      bookResults.value = items[0].title;
+        console.log(items[0].title);
+      }
+    );
+  } else if (anchorWord === "buy") {
+    const paramsProduct = {
+      keywords: `${taskAdded}`, // Search Ebay for products
+      domainFilter: [{ name: "domainName", value: "Books" }]
+    };
+    let merchResults = { class: "merchDisplay", value: "" };
 
-      // console.log(items[i].primaryCategory);
-    }
-  );
-  // //---------------------------------------------------------------------------------------
-  const paramsProduct = {
-    keywords: `${req.body.search}`, // Search Ebay for products
-    domainFilter: [{ name: "domainName", value: "Books" }]
-  };
-  let merchResults = { class: "merchDisplay", value: "" };
+    ebay.xmlRequest(
+      {
+        serviceName: "Finding",
+        opType: "findItemsByKeywords",
+        appId: ebayID,
+        params: paramsProduct,
+        parser: ebay.parseResponseJson
+      },
+      // gets all the items together in a merged array
+      function itemsCallback(error, itemsResponse) {
+        if (error) throw error;
 
-  ebay.xmlRequest(
-    {
-      serviceName: "Finding",
-      opType: "findItemsByKeywords",
-      appId: ebayID,
-      params: paramsProduct,
-      parser: ebay.parseResponseJson
-    },
-    // gets all the items together in a merged array
-    function itemsCallback(error, itemsResponse) {
-      if (error) throw error;
-
-      let items = itemsResponse.searchResult.item;
-      //   for (let i = 0; i < items.length; i++) {}
-      merchResults.value = items[0].title;
-    }
-  );
-  res.send(
-    testingvalue /*[merchResults, bookResults, foodResults, watchResult]*/
-  );
+        let items = itemsResponse.searchResult.item;
+        merchResults.value = items[0].title;
+        console.log(merchResults);
+      }
+    );
+  }
+  res.send(responseObj);
 });
 
 app.listen(PORT, () => {
