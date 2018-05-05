@@ -83,12 +83,23 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  knex
-    .from("users")
-    .where({ email: `${req.body.email}` })
-    .then(result => {
-      console.log("user is ", result);
-    });
+  knex.from("users").then(result => {
+    if (
+      req.body.email === result[0].email &&
+      req.body.password === result[0].password
+    ) {
+      alert("Proceed, you are verified");
+      return;
+    } else if (
+      req.body.email === result[0].email &&
+      req.body.password !== result[0].password
+    )
+      return;
+    {
+      alert("your password is wrong");
+    }
+    console.log("user is ", result[0].email);
+  });
 }); //get login
 app.get("/smart", (req, res) => {
   console.log("user logged in and verified");
