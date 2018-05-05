@@ -21,7 +21,7 @@ const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const morgan = require("morgan");
 const knexLogger = require("knex-logger");
-
+const Functions = require("./data-helpers.js");
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -30,36 +30,6 @@ const yelpConfig = {
   params: {
     name: "",
     location: "Montreal"
-  }
-};
-
-function findMovie(search) {
-  imdb
-    .search(
-      {
-        title: search
-      },
-      { apiKey: imdbKey }
-    )
-    .then(result => {
-      let movieArray = result.results;
-      for (let searchResult of movieArray) {
-        if (searchResult.title.toLowerCase() === search.toLowerCase()) {
-          console.log(searchResult.title + " " + searchResult.year);
-        }
-      }
-    })
-    .catch(console.log);
-}
-
-const confirmEntry = (array, input) => {
-  for (let i = 0; i < 3; i++) {
-    if (array[i].name.toLowerCase() === input.toLowerCase()) {
-      // console.log(array[i].location.address1);
-      console.log(array[0].name);
-    } else {
-      console.log("Not found");
-    }
   }
 };
 
@@ -112,6 +82,14 @@ app.post("/register", (req, res) => {
   res.redirect("/smart");
 });
 
+app.post("/login", (req, res) => {
+  knex
+    .from("users")
+    .where({ email: `${req.body.email}` })
+    .then(result => {
+      console.log("user is ", result);
+    });
+}); //get login
 app.get("/smart", (req, res) => {
   console.log("user logged in and verified");
   res.render("usersHome");
@@ -127,7 +105,6 @@ app.post("/smart", (req, res) => {
   let responseObj = { keyword: anchorWord, value: taskAdded };
   if (anchorWord === "eat") {
     yelpConfig.params.term = taskAdded; // Find restaurants
-    let foodResults = { class: "foodDisplay", value: "" };
 
     axios
       .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
@@ -140,10 +117,9 @@ app.post("/smart", (req, res) => {
       .catch(error => {
         console.log("Error!");
       });
-  }
+  } //if eat
   // // ----------------------------------------------------------------------------------------------------------
   else if (anchorWord === "watch") {
-    let watchResult = { class: "watchDisplay", value: "" };
     const findMovie = search => {
       // Find movies
       imdb
@@ -165,7 +141,7 @@ app.post("/smart", (req, res) => {
           }
         })
         .catch(console.log);
-    };
+    }; //else if watch
 
     findMovie(taskAdded);
   } else if (anchorWord === "read") {
@@ -173,7 +149,6 @@ app.post("/smart", (req, res) => {
       keywords: `${taskAdded}, Books`, // Search Ebay for Books
       domainFilter: [{ name: "domainName", value: "Books" }]
     };
-    let bookResults = { class: "bookDisplay", value: "" };
 
     ebay.xmlRequest(
       {
@@ -188,17 +163,15 @@ app.post("/smart", (req, res) => {
         if (error) throw error;
 
         let items = itemsResponse.searchResult.item;
-        // bookResults.value = items[0].title;
 
         console.log(items[0].title);
       }
-    );
+    ); //ebay api call
   } else if (anchorWord === "buy") {
     const paramsProduct = {
       keywords: `${taskAdded}`, // Search Ebay for products
       domainFilter: [{ name: "domainName", value: "Books" }]
     };
-    let merchResults = { class: "merchDisplay", value: "" };
 
     ebay.xmlRequest(
       {
@@ -213,13 +186,12 @@ app.post("/smart", (req, res) => {
         if (error) throw error;
 
         let items = itemsResponse.searchResult.item;
-        merchResults.value = items[0].title;
-        console.log(merchResults);
+        console.log(items[0].title);
       }
     );
-  }
+  } //else if buy
   res.send(responseObj);
-});
+}); //post "/smart"
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

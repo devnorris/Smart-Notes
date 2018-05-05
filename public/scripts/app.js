@@ -1,15 +1,5 @@
 $(() => {
-  //   // $.ajax({
-  //   //   method: "GET",
-  //   //   url: "/api/users"
-  //   // }).done(users => {
-  //   //   for (user of users) {
-  //   //     $("<div>")
-  //   //       .text(user.name)
-  //   //       .appendTo($("body"));
-  //   //   }
-
-  $("form").on("submit", function(event) {
+  $(".submitTodo").on("submit", function(event) {
     const formData = $("form").serialize();
     event.preventDefault();
     $.get("/smart", function(response) {
