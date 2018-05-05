@@ -1,22 +1,27 @@
-@import 'usersHome';
-@import 'register';
-
-
-
 body {
-  background-image: url("Body_Background.jpeg");
   width: 100%;
-
-
-  h1 {
-    color: #244751;
-  }
+  font-family: 'Open Sans Condensed', sans-serif;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #eee;
 }
-.welcome{
+
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+.welcome {
   width: 40%;
   margin: auto;
   text-align: center;
 }
+
 .inputTodo {
   text-align: center;
   height: 40%;
@@ -24,46 +29,63 @@ body {
   margin-top: 2%;
 }
 
-.logButton{
+.logButton {
   float: right;
+}
+
+.textExplanation {
+  font-size: 1.3em;
+  width: 100%;
 }
 
 .search {
   width: 50%;
   margin: auto;
+  height: 5em;
+  background-color: #f2f2f2;
+  border: 2px solid #292c2f;
+  color: black;
 }
+
 .categories {
   width: 100%;
   display: inline-flex;
   background-color: #2b3e58;
+  opacity: .8;
   color: #292c2f;
   padding: 2%;
 }
 
-.categories .watchDisplay{
-  width: 20%;
-  height: 80%;
-  background-color: white;
-  margin: 10px;
+button.submit:hover, button.submit:active {
+  background-color: #5c6f88;
 }
 
-.categories .foodDisplay{
-  width: 20%;
-  height: 80%;
-  background-color: white;
-  margin: 10px;
+.jumbotron{
+    background-color:#273c5f;
+    color:white;
 }
 
-.categories .merchDisplay{
-  width: 20%;
-  height: 80%;
-  background-color: white;
-  margin: 10px;
+.tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
 }
 
-.categories .bookDisplay{
-  width: 20%;
-  height: 80%;
-  background-color: white;
-  margin: 10px;
+
+.img-rounded {
+  height: 200px;
+  width: 200px;
+  margin-left: 20px;
+  margin-right: 20px;
+  opacity: 0.7;
+}
+
+.img-rounded:hover, .img-rounded:active {
+  opacity: 1;
+}
+
+
+.well {
+  text-align: center;
 }
