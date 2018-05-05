@@ -105,7 +105,6 @@ app.post("/register", (req, res) => {
 
   knex("users")
     .insert({
-      user_id: 5,
       email: req.body.email,
       password: req.body.password
     })
@@ -180,7 +179,6 @@ app.post("/smart", (req, res) => {
           let movieArray = result.results;
           for (let searchResult of movieArray) {
             if (searchResult.title.toLowerCase() === taskAdded.toLowerCase()) {
-              watchResult.value = searchResult.title + " " + searchResult.year;
               console.log("caught", searchResult.title);
             }
           }
@@ -235,6 +233,17 @@ app.post("/smart", (req, res) => {
       }
     );
   } //else if buy
+
+  knex
+    .from("category")
+    console.log(item[0].title)
+    .where({ category: req.body.search })
+    .then(result => {
+      console.log("user is ", result);
+    });
+}); //get login
+app.get("/smart", (req, res) => {
+  console.log("category added");
   res.send(responseObj);
 }); //post "/smart"
 
