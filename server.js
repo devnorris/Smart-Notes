@@ -99,7 +99,7 @@ app.get("/register", (req, res) => {
 
 app.post("/register", (req, res) => {
   knex('users')
-    .insert({user_id: 5,
+    .insert({
              email: req.body.email,
              password: req.body.password})
     .then(console.log("done"))
@@ -118,17 +118,17 @@ app.get("/smart", (req, res) => {
 
 
 app.post("/smart", (req, res) => {
-// yelpConfig.params.term = req.body.search; // Find restaurants
-//   axios
-//     .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
-//     .then(response => {
-//       let businessList = response.data.businesses;
-//       res.send(businessList[0].name);
-//       // confirmEntry(businessList, req.body.search);
-//     })
-//     .catch(error => {
-//       console.log("Error!");
-//     });
+  yelpConfig.params.term = req.body.search; // Find restaurants
+    axios
+      .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
+      .then(response => {
+        let businessList = response.data.businesses;
+        console.log(businessList[0].name);
+        // confirmEntry(businessList, req.body.search);
+      })
+      .catch(error => {
+        console.log("Error!");
+      });
 
 
 // ----------------------------------------------------------------------------------------------------------
@@ -151,31 +151,32 @@ app.post("/smart", (req, res) => {
 // findMovie(req.body.search);
 
 // ---------------------------------------------------------------------------------------------------------------
-const paramsBooks = {
-  keywords: `${req.body.search}, Books`, // Search Ebay for Books
-  domainFilter: [
-    {name: 'domainName', value: 'Books'}
-  ]
-};
+// const paramsBooks = {
+//   keywords: `${req.body.search}, Books`, // Search Ebay for Books
+//   domainFilter: [
+//     {name: 'domainName', value: 'Books'}
+//   ]
+// };
 
-ebay.xmlRequest({
-    serviceName: 'Finding',
-    opType: 'findItemsByKeywords',
-    appId: ebayID,
-    params: paramsBooks,
-    parser: ebay.parseResponseJson
-  },
-  // gets all the items together in a merged array
-  function itemsCallback(error, itemsResponse) {
-    if (error) throw error;
+// ebay.xmlRequest({
+//     serviceName: 'Finding',
+//     opType: 'findItemsByKeywords',
+//     appId: ebayID,
+//     params: paramsBooks,
+//     parser: ebay.parseResponseJson
+//   },
+//   // gets all the items together in a merged array
+//   function itemsCallback(error, itemsResponse) {
+//     if (error) throw error;
 
-    let items = itemsResponse.searchResult.item;
+//     let items = itemsResponse.searchResult.item;
 
-    //for (let i = 0; i < items.length; i++) {
+//     //for (let i = 0; i < items.length; i++) {
 
-       console.log(items[0].title);
+//        console.log(items[0].title);
 
-});
+
+// });
 //---------------------------------------------------------------------------------------
 
 // const paramsProduct = {
@@ -200,12 +201,30 @@ ebay.xmlRequest({
 
 //     for (let i = 0; i < items.length; i++) {
 
-//        res.send(items[0].primaryCategory);
+//        console.log(items[0].primaryCategory);
+//        res.redirect("/smart/products")
 //   }
 // });
 
 
  });
+
+app.get("/smart/books", (req, res) => {
+  res.render("books_list");
+});
+
+
+app.get("/smart/movies", (req, res) => {
+  res.render("movies_list");
+});
+
+app.get("/smart/restaurants" , (req, res) => {
+  res.render("restaurants_list");
+});
+
+app.get("/smart/products", (req, res) => {
+  res.render("product_list");
+});
 
 
 
