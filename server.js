@@ -50,20 +50,18 @@ function findMovie(search) {
 };
 
 
-const confirmEntry = (array, input) => {
-  for (let i = 0; i < 3; i++) {
-    if (array[i].name.toLowerCase() === input.toLowerCase()) {
-      console.log(array[i].name);
-      // console.log(array[i].location.address1);
-    } else {
-      console.log("Not found");
-    }
-
-    name: "",
-    location: "Montreal"
-
-  }
-};
+// const confirmEntry = (array, input) => {
+//   for (let i = 0; i < 3; i++) {
+//     if (array[i].name.toLowerCase() === input.toLowerCase()) {
+//       console.log(array[i].name);
+//       // console.log(array[i].location.address1);
+//     } else {
+//       console.log("Not found");
+//     }
+//     name: "",
+//     location: "Montreal"
+//   }
+// };
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -165,19 +163,8 @@ app.post("/smart", (req, res) => {
         console.log("Error!");
       });
 
-
-
-
-
-
- });
-
-
-
-
-  } //if eat
-  // // ----------------------------------------------------------------------------------------------------------
-  else if (anchorWord === "watch") {
+   //if eat
+ } else if (anchorWord === "watch") {
     const findMovie = search => {
       // Find movies
       imdb
