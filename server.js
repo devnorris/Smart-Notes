@@ -42,7 +42,7 @@ function findMovie(search) {
       let movieArray = result.results;
         for(let searchResult of movieArray) {
           if (searchResult.title.toLowerCase() === search.toLowerCase()) {
-            console.log(searchResult.title + ' ' + searchResult.year);
+            (searchResult.title + ' ' + searchResult.year);
           }
         }
     })
@@ -123,63 +123,36 @@ app.post("/smart", (req, res) => {
 //     .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
 //     .then(response => {
 //       let businessList = response.data.businesses;
-//       confirmEntry(businessList, req.body.search);
+//       res.send(businessList[0].name);
+//       // confirmEntry(businessList, req.body.search);
 //     })
 //     .catch(error => {
 //       console.log("Error!");
 //     });
 
+
 // ----------------------------------------------------------------------------------------------------------
-  // const findMovie = search => { // Find movies
-  //   imdb.search({
-  //     title: `${req.body.search}`
-  //   }, {
-  //     apiKey: 'b1b27127'
-  //   }).then(result => {
-  //     let movieArray = result.results;
-  //       for(let searchResult of movieArray) {
-  //         if (searchResult.title.toLowerCase() === req.body.search.toLowerCase()) {
-  //           console.log(searchResult.title + ' ' + searchResult.year);
-  //         }
-  //       }
-  //   })
-  //     .catch(console.log);
-  //   }
-
-//findMovie(req.body.search);
-
-// ---------------------------------------------------------------------------------------------------------------
-// const params = {
-//   keywords: `${req.body.search}, Books`, // Search Ebay for Books
-//   domainFilter: [
-//     {name: 'domainName', value: 'Books'}
-//   ]
+// function findMovie() {
+//   imdb.search({
+//     title: req.body.search
+//   },
+//   { apiKey: imdbKey})
+//     .then(result => {
+//       let movieArray = result.results;
+//         for(let searchResult of movieArray) {
+//          if (searchResult.title.toLowerCase() === req.body.search.toLowerCase()) {
+//             res.send(searchResult.title + ' ' + searchResult.year);
+//           }
+//         }
+//     })
+//     .catch(console.log);
 // };
 
-// ebay.xmlRequest({
-//     serviceName: 'Finding',
-//     opType: 'findItemsByKeywords',
-//     appId: ebayID,
-//     params: params,
-//     parser: ebay.parseResponseJson
-//   },
-//   // gets all the items together in a merged array
-//   function itemsCallback(error, itemsResponse) {
-//     if (error) throw error;
+// findMovie(req.body.search);
 
-//     let items = itemsResponse.searchResult.item;
-
-//     console.log('Found', items.length, 'items');
-
-//     for (let i = 0; i < items.length; i++) {
-
-//        console.log(items[i].primaryCategory);
-//   }
-// });
-//---------------------------------------------------------------------------------------
-
-const params = {
-  keywords: `${req.body.search}`, // Search Ebay for products
+// ---------------------------------------------------------------------------------------------------------------
+const paramsBooks = {
+  keywords: `${req.body.search}, Books`, // Search Ebay for Books
   domainFilter: [
     {name: 'domainName', value: 'Books'}
   ]
@@ -189,7 +162,7 @@ ebay.xmlRequest({
     serviceName: 'Finding',
     opType: 'findItemsByKeywords',
     appId: ebayID,
-    params: params,
+    params: paramsBooks,
     parser: ebay.parseResponseJson
   },
   // gets all the items together in a merged array
@@ -198,15 +171,41 @@ ebay.xmlRequest({
 
     let items = itemsResponse.searchResult.item;
 
-    console.log('Found', items.length, 'items');
+    //for (let i = 0; i < items.length; i++) {
 
-    for (let i = 0; i < items.length; i++) {
-
-       console.log(items[i].primaryCategory);
-  }
-});
+       console.log(items[0].title);
 
 });
+//---------------------------------------------------------------------------------------
+
+// const paramsProduct = {
+//   keywords: `${req.body.search}`, // Search Ebay for products
+//   domainFilter: [
+//     {name: 'domainName', value: 'Books'}
+//   ]
+// };
+
+// ebay.xmlRequest({
+//     serviceName: 'Finding',
+//     opType: 'findItemsByKeywords',
+//     appId: ebayID,
+//     params: paramsProduct,
+//     parser: ebay.parseResponseJson
+//   },
+//   // gets all the items together in a merged array
+//   function itemsCallback(error, itemsResponse) {
+//     if (error) throw error;
+
+//     let items = itemsResponse.searchResult.item;
+
+//     for (let i = 0; i < items.length; i++) {
+
+//        res.send(items[0].primaryCategory);
+//   }
+// });
+
+
+ });
 
 
 
