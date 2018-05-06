@@ -34,6 +34,7 @@ $(() => {
           console.log("ajax call fail");
         }
       });
+      $("form").trigger("reset");
     });
   }); //api verification
 

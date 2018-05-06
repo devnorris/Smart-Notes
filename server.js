@@ -8,12 +8,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const app = express();
-var cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const imdb = require("imdb-api");
 const axios = require("axios");
 const ebay = require("ebay-api");
 var flash = require("express-flash-messages");
 const yelpKey = process.env.yelpKey;
+const cookieSession = require("cookie-session");
 const ebayID = process.env.ebayID;
 const imdbKey = process.env.imdbKey;
 const knexConfig = require("./knexfile");
@@ -95,7 +96,6 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  var sessionID = "";
   knex
     .from("users")
     .then(result => {
@@ -137,7 +137,21 @@ app.post("/smart", (req, res) => {
       .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
       .then(response => {
         let businessList = response.data.businesses;
-        console.log(businessList[0].name);
+        console.log(
+          `${businessList[0].name}, ${businessList[0].rating}, ${
+            businessList[0].location.address1
+          }`
+        );
+
+        knex("todo") // knex call to add api item to todo_reference
+          .insert({
+            todo_name: `${responseObj.keyword} ${responseObj.value}`,
+            todo_reference: `${businessList[0].name}, ${
+              businessList[0].rating
+            }, ${businessList[0].location.address1}`
+          })
+          .then(console.log("done"))
+          .catch(err => console.log("error: ", err));
       })
       .catch(error => {
         console.log("Error!");
@@ -158,10 +172,18 @@ app.post("/smart", (req, res) => {
         )
         .then(result => {
           let movieArray = result.results;
-          for (let searchResult of movieArray) {
-            if (searchResult.title.toLowerCase() === taskAdded.toLowerCase()) {
-              console.log("caught", searchResult.title);
-            }
+          //console.log(movieArray);
+
+          if (movieArray[0].title.toLowerCase() === taskAdded.toLowerCase()) {
+            console.log(`${movieArray[0].title}, ${movieArray[0].year}`);
+
+            knex("todo") // knex call to add api item to todo_reference
+              .insert({
+                todo_name: `${responseObj.keyword} ${responseObj.value}`,
+                todo_reference: `${movieArray[0].title}, ${movieArray[0].year}`
+              })
+              .then(console.log("done"))
+              .catch(err => console.log("error: ", err));
           }
         })
         .catch(console.log);
@@ -188,7 +210,15 @@ app.post("/smart", (req, res) => {
 
         let items = itemsResponse.searchResult.item;
 
-        knexitems[0].title;
+        console.log(items[0].title);
+
+        knex("todo") // knex call to add api item to todo_reference
+          .insert({
+            todo_name: `${responseObj.keyword} ${responseObj.value}`,
+            todo_reference: `${items[0].title}`
+          })
+          .then(console.log("done"))
+          .catch(err => console.log("error: ", err));
       }
     ); //ebay api call
   } else if (anchorWord === "buy") {
@@ -210,9 +240,35 @@ app.post("/smart", (req, res) => {
         if (error) throw error;
 
         let items = itemsResponse.searchResult.item;
+        console.log(items[0]);
+
+        knex("todo") // knex call to add api item to todo_reference
+          .insert({
+            todo_name: `${responseObj.keyword} ${responseObj.value}`,
+            todo_reference: `${items[0].title}, ${
+              items[0].sellingStatus.currentPrice.amount
+            }`
+          })
+          .then(console.log("done"))
+          .catch(err => console.log("error: ", err));
       }
     );
   } //else if buy
+
+  // knex("todo")
+  //     .insert({
+  //       todo_name: `${responseObj.keyword} ${responseObj.value}`
+  //     })
+  //     .then(console.log("done"))
+  //     .catch(err => console.log("error: ", err))
+
+  knex("category")
+    .insert({
+      category_name: `${responseObj.keyword}`
+    })
+    .then(console.log("done"))
+    .catch(err => console.log("error: ", err));
+
   res.send(responseObj);
 }); //post "/smart"
 
