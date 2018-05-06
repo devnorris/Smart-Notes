@@ -116,6 +116,7 @@ app.post("/login", (req, res) => {
 
   res.redirect("/smart");
 });
+
 app.get("/smart", (req, res) => {
   res.render("usersHome");
 });
