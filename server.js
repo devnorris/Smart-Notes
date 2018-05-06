@@ -13,11 +13,9 @@ const imdb = require("imdb-api");
 const axios = require("axios");
 const ebay = require("ebay-api");
 var flash = require("express-flash-messages");
-var session = require("express-session");
 const yelpKey = process.env.yelpKey;
 const ebayID = process.env.ebayID;
 const imdbKey = process.env.imdbKey;
-
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const morgan = require("morgan");
@@ -25,7 +23,7 @@ const knexLogger = require("knex-logger");
 const imports = require("./data-helpers.js");
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
-
+var cookieSession = require("cookie-session");
 const yelpConfig = {
   headers: { Authorization: yelpKey },
   params: {
@@ -42,6 +40,13 @@ app.use(flash());
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 app.use(cookieParser());
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["key1", "key2", "key3"],
+    maxAge: 24 * 60 * 60 * 1000
+  })
+);
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -54,14 +59,7 @@ app.use(
   })
 );
 app.use(express.static("public"));
-app.use(
-  session({
-    cookie: { maxAge: 60000 },
-    secret: "woot",
-    resave: false,
-    saveUninitialized: false
-  })
-);
+
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
@@ -76,6 +74,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
+  // req.session = null;
   res.render("register");
 });
 
@@ -87,40 +86,43 @@ app.post("/register", (req, res) => {
       password: req.body.password
     })
     .then(console.log("done"))
-    .catch(err => console.log("error: ", err))
-    .finally(() => {
-      console.log("kill connection");
-      knex.destroy();
-    });
+    .catch(err => console.log("error: ", err));
+
+  req.session.user = req.body.email;
+  // console.log("register redirection: ", req.session);
   res.redirect("/smart");
 });
 
 app.post("/login", (req, res) => {
+  var sessionID = "";
   knex
     .from("users")
     // .where({ email: req.body.Logemail })
     .then(result => {
       for (let user of result) {
-        if (
-          user.email === req.body.Logemail &&
-          user.password === req.body.Logpassword
+        if (user.password !== req.body.Logpassword) {
+          console.log("not you");
+        } else if (user.email !== req.body.Logemail) {
+          return;
+        } else if (
+          user.password === req.body.Logpassword &&
+          user.email === req.body.Logemail
         ) {
-          console.log(
-            "Push to branch caused some issues. Testing after having restarted VM"
-          );
+          req.session.user = req.body.Logemail;
+          res.redirect("/smart");
         }
       }
     })
-    .catch(err => console.log("login db error.", err))
-    .finally(() => {
-      knex.destroy;
-    });
+    .catch(err => console.log("login db error.", err));
 
-  res.redirect("/smart");
+  // req.session.user = req.body.Logemail;
+  // res.redirect("/smart");
 });
 
 app.get("/smart", (req, res) => {
-  res.render("usersHome");
+  let ejsVars = { user: req.session.user };
+  console.log("vars", ejsVars);
+  res.render("usersHome", ejsVars);
 });
 
 app.post("/smart", (req, res) => {
