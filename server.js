@@ -65,31 +65,32 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
+  let ejsVars = { user: req.session.user };
   req.flash("notify", "This is a test notification.");
   res.render("index", {
     user: req.currentUser,
     info: req.flash("info"),
-    errors: req.flash("errors")
+    errors: req.flash("errors"),
+    ejsVars
   });
 });
 
 app.get("/register", (req, res) => {
-  // req.session = null;
-  res.render("register");
+  let ejsVars = { user: req.session.user };
+
+  res.render("register", ejsVars);
 });
 
 app.post("/register", (req, res) => {
   knex("users")
     .insert({
-      // user_id: 5,
       email: req.body.email,
       password: req.body.password
     })
     .then(console.log("done"))
     .catch(err => console.log("error: ", err));
 
-  req.session.user = req.body.email;
-  // console.log("register redirection: ", req.session);
+  req.session.user = req.body.email.split("@")[0];
   res.redirect("/smart");
 });
 
@@ -97,7 +98,6 @@ app.post("/login", (req, res) => {
   var sessionID = "";
   knex
     .from("users")
-    // .where({ email: req.body.Logemail })
     .then(result => {
       for (let user of result) {
         if (user.password !== req.body.Logpassword) {
@@ -108,15 +108,12 @@ app.post("/login", (req, res) => {
           user.password === req.body.Logpassword &&
           user.email === req.body.Logemail
         ) {
-          req.session.user = req.body.Logemail;
+          req.session.user = req.body.Logemail.split("@")[0];
           res.redirect("/smart");
         }
       }
     })
     .catch(err => console.log("login db error.", err));
-
-  // req.session.user = req.body.Logemail;
-  // res.redirect("/smart");
 });
 
 app.get("/smart", (req, res) => {
@@ -218,6 +215,11 @@ app.post("/smart", (req, res) => {
   } //else if buy
   res.send(responseObj);
 }); //post "/smart"
+
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/");
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
