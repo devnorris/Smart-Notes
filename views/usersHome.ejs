@@ -3,12 +3,12 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Smart To-Do</title>
+  <meta name="viewport" content="width = device-width, initial-scale = 1">
+  <title>Smart To-Do</title>
 
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
 
@@ -19,6 +19,8 @@
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 
   <script type="text/javascript" src="/scripts/app.js"></script>
+
+
 
 </head>
 
@@ -42,54 +44,93 @@
 
     </div>
 
-    </div>
-
-<div class="container-fluid">
-
-<div class="well">
-<h3>Type what you want to <strong>WATCH, EAT, BUY</strong> or <strong>READ</strong> above, and be amazed as the Smart To-Do app categorizes your words into the correct list!</h3>
-</div>
-
-<br>
-
-
-<div class="jumbotron" align="center">
-<div class="container-fluid">
-  <div class="row">
-
-    <div class="box1">
-    <div class="col-sm-3">
-      <img src="../Images/Watch.jpeg" class="img-rounded" id="watchHover">
-      <div class="watchDisplay"><font size="6">Watch</font></div>
-      <div class='sideInfoHover'>
-      </div>
-    </div>
-    </div>
-
-    <div class="col-sm-3">
-      <img src="../Images/food1.jpeg" class="img-rounded">
-      <div class="watchDisplay"><font size="6">Eat</font></div>
-
-    </div>
-
-
-    <div class="col-sm-3">
-      <img src="../Images/Products.jpeg" class="img-rounded">
-      <div class="watchDisplay"><font size="6">Buy</font></div>
-
-    </div>
-
-
-    <div class="col-sm-3">
-      <img src="../Images/books.jpeg" class="img-rounded">
-      <div class="watchDisplay"><font size="6">Read</font></div>
-
-    </div>
-
   </div>
-</div>
+
+  <div class="container-fluid">
+
+    <div class="well">
+      <h3>Type what you want to <strong>WATCH, EAT, BUY</strong> or <strong>READ</strong> above, and be amazed as the Smart To-Do app categorizes your words into the correct list!</h3>
+    </div>
+
+    <br>
 
 
-</body>
+    <div class="jumbotron" align="center">
+      <div class="container-fluid">
+        <div class="row">
 
-</html>
+
+          <!--  ******       WATCH     ********  -->
+
+          <div class="col-sm-3">
+            <a class="toggleWatch "><img src="../Images/Watch.jpeg" class="img-rounded"></a>
+            <div class="watchDisplay"><font size="6">Watch</font></div>
+
+            <br>
+
+            <div class="displayWatch" style="display:none">
+              <br>
+              <div class="displayContainer">
+                <p> WATCH THE THINGS! </p>
+              </div>
+            </div>
+              </div>
+
+
+            <!--  ******       FOOD     ********  -->
+
+            <div class="col-sm-3">
+              <a class="toggleEat"><img src="../Images/food1.jpeg" class="img-rounded"></a>
+              <div class="watchDisplay"><font size="6">Eat</font></div>
+
+
+            <br>
+
+             <div class="displayEat" style="display:none">
+              <br>
+              <div class="displayContainer">
+                <p> EAT THE THINGS! </p>
+              </div>
+            </div>
+          </div>
+
+            <!--  ******       BUY     ********  -->
+
+            <div class="col-sm-3">
+             <a class="toggleBuy"><img src="../Images/Products.jpeg" class="img-rounded"></a>
+              <div class="watchDisplay"><font size="6">Buy</font></div>
+
+              <br>
+
+            <div class="displayBuy" style="display:none">
+              <br>
+              <div class="displayContainer">
+                <p> BUY THE THINGS! </p>
+              </div>
+            </div>
+          </div>
+
+
+            <!--  ******       READ     ********  -->
+
+            <div class="col-sm-3">
+             <a class="toggleRead"><img src="../Images/books.jpeg" class="img-rounded"></a>
+              <div class="watchDisplay"><font size="6">Read</font></div>
+
+              <br>
+
+               <div class="displayRead" style="display:none">
+              <br>
+              <div class="displayContainer">
+                <p> READ THE THINGS! </p>
+              </div>
+            </div>
+          </div>
+
+          </div>
+        </div>
+
+
+      </body>
+
+      </html>

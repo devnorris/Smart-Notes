@@ -75,11 +75,8 @@ button.submit:hover, button.submit:active {
   opacity: 1;
 }
 
-.sideInfoHover {
-  opacity: 0;
+.displayContainer {
+  background-color: white;
+  color: #273c5f;
+  width: 30em;
 }
-
-.opacityInfoHover:hover, .opacityInfoHover:active {
-  opacity: 1;
-}
-
