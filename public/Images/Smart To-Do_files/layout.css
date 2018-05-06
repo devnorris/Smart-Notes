@@ -1,0 +1,93 @@
+body {
+  width: 100%;
+  font-family: 'Open Sans Condensed', sans-serif;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  background-image: url("../Images/BG.jpg");
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.welcome {
+  width: 40%;
+  margin: auto;
+  text-align: center;
+}
+
+.inputTodo {
+  text-align: center;
+  height: 40%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+.logButton {
+  float: right;
+}
+
+.textExplanation {
+  font-size: 1.3em;
+  width: 100%;
+}
+
+.search {
+  width: 50%;
+  margin: auto;
+  height: 5em;
+  background-color: #f2f2f2;
+  border: 2px solid #292c2f;
+  color: black;
+}
+
+button.submit:hover, button.submit:active {
+  background-color: #5c6f88;
+}
+
+.jumbotron {
+  background-color: #273c5f;
+  color: white;
+}
+
+.well {
+  text-align: center;
+  color: #273c5f;
+}
+
+#box1 {
+  float: left;
+  font-size: 25px;
+  width: 388px;
+  height: 477px;
+  background-image: url(media/trying1.png);
+  background: #ccc;
+  /*for example*/
+  margin-left: 120px;
+  margin-top: 90px;
+}
+
+#text1 {
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+#box1:hover #text1 {
+  opacity: 1;
+}
+
+.img-rounded {
+  height: 30em;
+  width: 30em;
+  margin-right: 18px;
+  opacity: 0.6;
+}
+
+.img-rounded:hover, .img-rounded:active {
+  opacity: 1;
+}

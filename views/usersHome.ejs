@@ -24,14 +24,13 @@
 
 <body>
 
-
-<div class="container-fluid">
+  <div class="container-fluid">
 
     <div class="jumbotron" align="center">
       <h1>Smart To-Do</h1>
-      <h3 id="introText">Quick! Type in the cool thing/place before you forget! We'll take care of sorting it.</p></h3>
+      <h3 id="introText">Quick! Type in the cool thing/place before you forget! We'll take care of sorting it</h3>
 
-      <form method="POST" action="/smart">
+      <form class="submitTodo" method="POST" action="/smart">
 
         <input class="search" name="search" autofocus>
 
@@ -50,6 +49,7 @@
 <div class="well">
 <h3>Type what you want to <strong>WATCH, EAT, BUY</strong> or <strong>READ</strong> above, and be amazed as the Smart To-Do app categorizes your words into the correct list!</h3>
 </div>
+
 <br>
 
 
@@ -57,40 +57,43 @@
 <div class="container-fluid">
   <div class="row">
 
-
-<!-- The scrollable area -->
-<body data-spy="scroll" data-target=".jumbotron" data-offset="50">
-
-      <div class="col-sm-3">
-        <img src="../Images/Watch.jpeg" class="img-rounded">
-        <div class="watchDisplay"><font size="6">To Watch</font></div>
-      </div>
-
+    <div class="box1">
+    <div class="col-sm-3">
+      <img src="../Images/Watch.jpeg" class="img-rounded" id="watchHover">
+      <div class="watchDisplay"><font size="6">To Watch</font></div>
+    </div>
+    </div>
 
     <div class="col-sm-3">
       <img src="../Images/food1.jpeg" class="img-rounded">
-      <div class="foodDisplay"><font size="6">To Eat</font></div>
+      <div class="foodDisplay">To Eat</div>
 
     </div>
 
 
     <div class="col-sm-3">
-      <img src="../Images/products.jpeg" class="img-rounded">
-      <div class="merchDisplay"><font size="6">To Buy</font></div>
+      <img src="../Images/Products.jpeg" class="img-rounded">
+      <div class="merchDisplay">To Buy</div>
 
     </div>
 
 
     <div class="col-sm-3">
       <img src="../Images/books.jpeg" class="img-rounded">
-      <div class="bookDisplay"><font size="6">To Read</font></div>
+      <div class="bookDisplay">To Read</div>
 
     </div>
 
+  </div>
 </div>
+
+<div id="box1">
+<p id="text1">
+<a href="url">DESTINATION</a>
+</p>
+</div>
+
+
 </body>
 
 </html>
-
-
-
