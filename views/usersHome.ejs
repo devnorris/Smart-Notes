@@ -25,7 +25,7 @@
 <body>
 
   <% include partials/_header %>
-  <div class="container">
+  <div class="container-fluid">
 
     <div class="jumbotron" align="center">
       <h1>Smart To-Do</h1>
@@ -45,7 +45,7 @@
 
     </div>
 
-<div class="container">
+<div class="container-fluid">
 
 <div class="well">
 <h4>Simply type in a word or two above, and be amazed as the Smart To-Do app categorizes your words into the correct list!</h4>
@@ -54,15 +54,21 @@
 <br>
 
 
+
 <div class="jumbotron" align="center">
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-sm-3">
-      <img src="../Images/Watch.jpeg" class="img-rounded">
-      <div class="watchDisplay">To Watch</div>
 
-    </div>
+<!-- The scrollable area -->
+<body data-spy="scroll" data-target=".jumbotron" data-offset="50">
+
+      <div class="col-sm-3">
+        <img src="../Images/Watch.jpeg" class="img-rounded">
+        <div class="watchDisplay">To Watch</div>
+      </div>
+</body>
+
 
     <div class="col-sm-3">
       <img src="../Images/food.jpeg" class="img-rounded">
@@ -84,10 +90,7 @@
 
     </div>
 
-  </div>
 </div>
-
-
 </body>
 
 </html>
