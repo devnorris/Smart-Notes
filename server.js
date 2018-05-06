@@ -11,6 +11,7 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const imdb = require("imdb-api");
 const axios = require("axios");
+
 const ebay = require("ebay-api");
 var flash = require("express-flash-messages");
 const yelpKey = process.env.yelpKey;
@@ -22,6 +23,7 @@ const knex = require("knex")(knexConfig[ENV]);
 const morgan = require("morgan");
 const knexLogger = require("knex-logger");
 const imports = require("./data-helpers.js");
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 var cookieSession = require("cookie-session");
