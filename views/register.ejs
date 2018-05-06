@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <title>Home Page</title>
-
+  
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
+  
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
@@ -15,17 +15,17 @@
   <div class="container">
     <p>LOGIN OR REGISTER BELOW</p>
     <form method="POST" action="/register">
-      <p>Login</p>
+      <p>Join</p>
       Email: <input name="email" type="email">
       Password: <input name="password" type="password">
-      <button type="submit">login</button>
+      <button type="submit">Join</button>
     </form>
-    toggle form below when clicking <button>register</button>
-    <form method="POST" action="/login">
+    Already a user? <a class="login">Login</a>
+    <form class="loginForm" method="POST" action="/login" style="display: none">
       <p>Login</p>
-      Email: <input type="email">
-      Password: <input type="password">
-      <button type="submit">JOIN</button>
+      Email: <input name="Logemail">
+      Password: <input name="Logpassword">
+      <button type="submit">Login</button>
     </form>
   </div>
 </body>

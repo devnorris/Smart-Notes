@@ -1,15 +1,22 @@
 <!doctype HTML>
 <span class=headerSpan>
-<nav class="nav">
-  <b>user variable here</b>
-  <span class="logButton">
-    <button class="action">STATUS</button>
-  </span>
-</nav>
-</span>
-<div class="welcome">
-
- <h4> DESCRIPTION DEPENDING ON LOGIN STATUS</h4>
-</div>
-
-
+  <nav class="nav">
+    <% if(user) { %>
+      Welcome back <%=user%> :)
+      <form action="/logout" method="POST">
+        <button type="submit" >Logout</span>
+        </form>
+        <%}%>
+        
+        <span class="logButton">
+          <button class="action">STATUS</button>
+        </span>
+      </nav>
+    </span>
+    <div class="welcome">
+      
+      <h4> DESCRIPTION DEPENDING ON LOGIN STATUS</h4>
+    </div>
+    
+    
+    
