@@ -21,7 +21,7 @@ const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const morgan = require("morgan");
 const knexLogger = require("knex-logger");
-const Functions = require("./data-helpers.js");
+const imports = require("./data-helpers.js");
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -69,11 +69,11 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   knex("users")
     .insert({
-      user_id: 5,
+      // user_id: 5,
       email: req.body.email,
       password: req.body.password
     })
-    .then(console.log("done"))
+    .then(console.log("done", result))
     .catch(err => console.log("error: ", err))
     .finally(() => {
       console.log("kill connection");
@@ -85,13 +85,18 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
   knex
     .from("users")
-    .where({ email: `${req.body.email}` })
+    .where({ email: req.body.Logemail })
     .then(result => {
       console.log("user is ", result);
+    })
+    .catch(err => console.log("login db error.", err))
+    .finally(() => {
+      knex.destroy;
     });
-}); //get login
+
+  res.redirect("/smart");
+});
 app.get("/smart", (req, res) => {
-  console.log("user logged in and verified");
   res.render("usersHome");
 });
 
@@ -123,7 +128,7 @@ app.post("/smart", (req, res) => {
       imdb
         .search(
           {
-            title: `${taskAdded}`
+            title: taskAdded
           },
           {
             apiKey: "b1b27127"
@@ -166,7 +171,7 @@ app.post("/smart", (req, res) => {
     ); //ebay api call
   } else if (anchorWord === "buy") {
     const paramsProduct = {
-      keywords: `${taskAdded}`, // Search Ebay for products
+      keywords: taskAdded, // Search Ebay for products
       domainFilter: [{ name: "domainName", value: "Books" }]
     };
 
@@ -183,7 +188,6 @@ app.post("/smart", (req, res) => {
         if (error) throw error;
 
         let items = itemsResponse.searchResult.item;
-        console.log(items[0].title);
       }
     );
   } //else if buy

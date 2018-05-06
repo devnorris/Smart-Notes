@@ -35,5 +35,9 @@ $(() => {
         }
       });
     });
+  }); //api verification
+
+  $(".login").on("click", function() {
+    $(".loginForm").slideToggle();
   });
-});
+}); //doc ready
