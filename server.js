@@ -26,7 +26,6 @@ const imports = require("./data-helpers.js");
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
-var cookieSession = require("cookie-session");
 const yelpConfig = {
   headers: { Authorization: yelpKey },
   params: {
