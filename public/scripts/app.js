@@ -7,4 +7,10 @@ $(() => {
       $("<div>").text(user.name).appendTo($("body"));
     }
   });;
+
+  $('.toggleLogin').on('click', function() {
+    $('.loginForm').slideDown()
+  });
+
 });
+

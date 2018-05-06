@@ -4,7 +4,7 @@ body {
   min-height: 100%;
   padding: 0;
   margin: 0;
-   background-image: url("../Images/BG.jpg");
+  background-image: url("../Images/BG.jpg");
 }
 
 
@@ -74,10 +74,10 @@ button.submit:hover, button.submit:active {
 
 
 .img-rounded {
-  height: 240px;
-  width: 240px;
+  height: 30em;
+  width: 30em;
   margin-right: 18px;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .img-rounded:hover, .img-rounded:active {
@@ -87,6 +87,7 @@ button.submit:hover, button.submit:active {
 
 .well {
   text-align: center;
+    color:#273c5f;
 }
 
 thead, tbody { display: block; }
@@ -95,4 +96,3 @@ tbody {
     overflow-y: auto;    /* Trigger vertical scroll    */
     overflow-x: hidden;  /* Hide the horizontal scroll */
 }
-
