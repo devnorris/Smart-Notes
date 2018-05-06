@@ -135,7 +135,7 @@ app.post("/smart", (req, res) => {
         )
         .then(result => {
           let movieArray = result.results;
-          console.log(movieArray);
+          //console.log(movieArray);
 
             if (movieArray[0].title.toLowerCase() === taskAdded.toLowerCase()) {
               console.log(`${movieArray[0].title}, ${movieArray[0].year}`);
