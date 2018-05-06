@@ -8,11 +8,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const app = express();
-
+var cookieParser = require("cookie-parser");
 const imdb = require("imdb-api");
 const axios = require("axios");
 const ebay = require("ebay-api");
-
+var flash = require("express-flash-messages");
+var session = require("express-session");
 const yelpKey = process.env.yelpKey;
 const ebayID = process.env.ebayID;
 const imdbKey = process.env.imdbKey;
@@ -37,10 +38,10 @@ const yelpConfig = {
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
-
+app.use(flash());
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
-
+app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -53,13 +54,25 @@ app.use(
   })
 );
 app.use(express.static("public"));
-
+app.use(
+  session({
+    cookie: { maxAge: 60000 },
+    secret: "woot",
+    resave: false,
+    saveUninitialized: false
+  })
+);
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  req.flash("notify", "This is a test notification.");
+  res.render("index", {
+    user: req.currentUser,
+    info: req.flash("info"),
+    errors: req.flash("errors")
+  });
 });
 
 app.get("/register", (req, res) => {
@@ -73,7 +86,7 @@ app.post("/register", (req, res) => {
       email: req.body.email,
       password: req.body.password
     })
-    .then(console.log("done", result))
+    .then(console.log("done"))
     .catch(err => console.log("error: ", err))
     .finally(() => {
       console.log("kill connection");
@@ -85,9 +98,16 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
   knex
     .from("users")
-    .where({ email: req.body.Logemail })
+    // .where({ email: req.body.Logemail })
     .then(result => {
-      console.log("user is ", result);
+      for (let user of result) {
+        if (
+          user.email === req.body.Logemail &&
+          user.password === req.body.Logpassword
+        ) {
+          console.log("push now");
+        }
+      }
     })
     .catch(err => console.log("login db error.", err))
     .finally(() => {
@@ -166,7 +186,7 @@ app.post("/smart", (req, res) => {
 
         let items = itemsResponse.searchResult.item;
 
-        console.log(items[0].title);
+        knexitems[0].title;
       }
     ); //ebay api call
   } else if (anchorWord === "buy") {
