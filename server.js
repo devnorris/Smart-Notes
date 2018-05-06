@@ -105,7 +105,9 @@ app.post("/login", (req, res) => {
           user.email === req.body.Logemail &&
           user.password === req.body.Logpassword
         ) {
-          console.log("push now");
+          console.log(
+            "Push to branch caused some issues. Testing after having restarted VM"
+          );
         }
       }
     })
