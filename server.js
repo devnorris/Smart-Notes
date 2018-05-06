@@ -69,16 +69,12 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   knex("users")
     .insert({
-      user_id: 5,
       email: req.body.email,
       password: req.body.password
     })
     .then(console.log("done"))
     .catch(err => console.log("error: ", err))
-    .finally(() => {
-      console.log("kill connection");
-      knex.destroy();
-    });
+
   res.redirect("/smart");
 });
 
@@ -111,6 +107,14 @@ app.post("/smart", (req, res) => {
       .then(response => {
         let businessList = response.data.businesses;
         console.log(businessList[0].name);
+
+    knex("todo") // knex call to add api item to todo_reference
+      .insert({
+        todo_name: `${responseObj.keyword} ${responseObj.value}`,
+        todo_reference: `${businessList[0].name}`
+      })
+      .then(console.log("done"))
+      .catch(err => console.log("error: ", err))
       })
       .catch(error => {
         console.log("Error!");
@@ -134,6 +138,14 @@ app.post("/smart", (req, res) => {
           for (let searchResult of movieArray) {
             if (searchResult.title.toLowerCase() === taskAdded.toLowerCase()) {
               console.log("caught", searchResult.title);
+
+      knex("todo")// knex call to add api item to todo_reference
+        .insert({
+          todo_name: `${responseObj.keyword} ${responseObj.value}`,
+          todo_reference: `${searchResult.title}`
+          })
+        .then(console.log("done"))
+        .catch(err => console.log("error: ", err))
             }
           }
         })
@@ -162,6 +174,14 @@ app.post("/smart", (req, res) => {
         let items = itemsResponse.searchResult.item;
 
         console.log(items[0].title);
+
+      knex("todo") // knex call to add api item to todo_reference
+        .insert({
+          todo_name: `${responseObj.keyword} ${responseObj.value}`,
+          todo_reference: `${items[0].title}`
+          })
+        .then(console.log("done"))
+        .catch(err => console.log("error: ", err))
       }
     ); //ebay api call
   } else if (anchorWord === "buy") {
@@ -184,9 +204,32 @@ app.post("/smart", (req, res) => {
 
         let items = itemsResponse.searchResult.item;
         console.log(items[0].title);
+
+      knex("todo") // knex call to add api item to todo_reference
+        .insert({
+          todo_name: `${responseObj.keyword} ${responseObj.value}`,
+          todo_reference: `${items[0].title}`
+          })
+        .then(console.log("done"))
+        .catch(err => console.log("error: ", err))
       }
     );
   } //else if buy
+
+// knex("todo")
+//     .insert({
+//       todo_name: `${responseObj.keyword} ${responseObj.value}`
+//     })
+//     .then(console.log("done"))
+//     .catch(err => console.log("error: ", err))
+
+knex('category')
+    .insert({
+      category_name: `${responseObj.keyword}`
+    })
+    .then(console.log("done"))
+    .catch(err => console.log("error: ", err))
+
   res.send(responseObj);
 }); //post "/smart"
 
