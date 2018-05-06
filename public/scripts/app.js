@@ -10,24 +10,24 @@ $(() => {
         success: function(result) {
           if (result.keyword === "eat") {
             $(".foodDisplay")
-            .append($(`<li>${result.keyword} ${result.value}</li>`))
-            .hide()
-            .fadeIn(800, function() {});
+              .append($(`<li>${result.keyword} ${result.value}</li>`))
+              .hide()
+              .fadeIn(800, function() {});
           } else if (result.keyword === "watch") {
             $(".watchDisplay")
-            .append($(`<li>${result.keyword} ${result.value}</li>`))
-            .hide()
-            .fadeIn(800, function() {});
+              .append($(`<li>${result.keyword} ${result.value}</li>`))
+              .hide()
+              .fadeIn(800, function() {});
           } else if (result.keyword === "buy") {
             $(".merchDisplay")
-            .append($(`<li>${result.keyword} ${result.value}</li>`))
-            .hide()
-            .fadeIn(800, function() {});
+              .append($(`<li>${result.keyword} ${result.value}</li>`))
+              .hide()
+              .fadeIn(800, function() {});
           } else if (result.keyword === "read") {
             $(".bookDisplay")
-            .append($(`<li>${result.keyword} ${result.value}</li>`))
-            .hide()
-            .fadeIn(800, function() {});
+              .append($(`<li>${result.keyword} ${result.value}</li>`))
+              .hide()
+              .fadeIn(800, function() {});
           }
         },
         error: function(error) {
@@ -48,4 +48,7 @@ $(() => {
 }); //doc ready
 
 
-
+      $("form").trigger("reset");
+    });
+  });
+});
