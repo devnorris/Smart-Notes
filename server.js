@@ -69,7 +69,6 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   knex("users")
     .insert({
-      user_id: 5,
       email: req.body.email,
       password: req.body.password
     })
@@ -187,7 +186,24 @@ app.post("/smart", (req, res) => {
       }
     );
   } //else if buy
+
+  knex("todo")
+    .insert({
+      todo_id: 1,
+      todo_name: `${responseObj}`,
+      category_id: 4,
+      user_id: 5
+    })
+    //.join('todo', 'users.user_id', '=', 'todo.user_id')
+    .then(console.log("done"))
+    .catch(err => console.log("error: ", err))
+    .finally(() => {
+      console.log("kill connection");
+      knex.destroy();
+    });
+
   res.send(responseObj);
+
 }); //post "/smart"
 
 app.listen(PORT, () => {
