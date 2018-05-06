@@ -1,6 +1,13 @@
 <!doctype HTML>
 <span class=headerSpan>
 <nav class="nav">
+  <% if(!user) {%>
+    <%=user%>
+Welcom back <%=user%> :)
+
+<span>LOGOUT</span>
+<%}%>
+  
   <b>user variable here</b>
   <span class="logButton">
     <button class="action">STATUS</button>

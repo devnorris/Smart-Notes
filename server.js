@@ -190,6 +190,9 @@ app.post("/smart", (req, res) => {
   res.send(responseObj);
 }); //post "/smart"
 
+app.post("/logout", (req, res) => {
+  req.session = null;
+});
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
