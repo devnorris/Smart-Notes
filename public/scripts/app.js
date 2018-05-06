@@ -41,4 +41,21 @@ $(() => {
   $(".login").on("click", function() {
     $(".loginForm").slideToggle();
   });
+
+  $(".toggleWatch").click(function() {
+    $(".displayWatch").slideToggle();
+  });
+
+  $(".toggleEat").click(function() {
+    $(".displayEat").slideToggle();
+  });
+
+  $(".toggleBuy").click(function() {
+    $(".displayBuy").slideToggle();
+  });
+
+  $(".toggleRead").click(function() {
+    $(".displayRead").slideToggle();
+  });
+
 }); //doc ready

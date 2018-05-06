@@ -1,43 +1,35 @@
-body {
+ body {
   width: 100%;
   font-family: 'Open Sans Condensed', sans-serif;
   min-height: 100%;
   padding: 0;
   margin: 0;
-  background-color: #eee;
+  background-image: url("../Images/BG.jpg");
 }
-
-
 html {
   box-sizing: border-box;
 }
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
-
 .welcome {
   width: 40%;
   margin: auto;
   text-align: center;
 }
-
 .inputTodo {
   text-align: center;
   height: 40%;
   margin-bottom: 2%;
   margin-top: 2%;
 }
-
 .logButton {
   float: right;
 }
-
 .textExplanation {
   font-size: 1.3em;
   width: 100%;
 }
-
 .search {
   width: 50%;
   margin: auto;
@@ -46,46 +38,28 @@ html {
   border: 2px solid #292c2f;
   color: black;
 }
-
-.categories {
-  width: 100%;
-  display: inline-flex;
-  background-color: #2b3e58;
-  opacity: .8;
-  color: #292c2f;
-  padding: 2%;
-}
-
 button.submit:hover, button.submit:active {
   background-color: #5c6f88;
 }
-
 .jumbotron{
     background-color:#273c5f;
     color:white;
 }
-
-.tab-content {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
+.well {
+  text-align: center;
+    color:#273c5f;
 }
-
-
 .img-rounded {
-  height: 200px;
-  width: 200px;
-  margin-left: 20px;
-  margin-right: 20px;
-  opacity: 0.7;
+  height: 30em;
+  width: 30em;
+  margin-right: 18px;
+  opacity: 0.6;
 }
-
 .img-rounded:hover, .img-rounded:active {
   opacity: 1;
 }
-
-
-.well {
-  text-align: center;
+.displayContainer {
+  background-color: white;
+  color: #273c5f;
+  width: 30em;
 }

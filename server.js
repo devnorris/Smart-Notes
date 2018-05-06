@@ -13,7 +13,7 @@ const imdb = require("imdb-api");
 const axios = require("axios");
 
 const ebay = require("ebay-api");
-var flash = require("express-flash-messages");
+const flash = require("express-flash-messages");
 const yelpKey = process.env.yelpKey;
 const cookieSession = require("cookie-session");
 const ebayID = process.env.ebayID;
