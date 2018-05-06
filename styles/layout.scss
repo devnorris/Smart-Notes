@@ -64,27 +64,6 @@ button.submit:hover, button.submit:active {
 }
 
 
-#box1 {
-float:left;
-font-size:25px;
-width:388px;
-height:477px;
-background-image: url(media/trying1.png);
-background: #ccc; /*for example*/
-margin-left: 120px;
-margin-top: 90px;
-
-}
-
-#text1{
-    opacity: 0;
-    transition: all 0.5s;
-}
-#box1:hover #text1{
-    opacity: 1;
-}
-
-
 .img-rounded {
   height: 30em;
   width: 30em;
@@ -96,4 +75,11 @@ margin-top: 90px;
   opacity: 1;
 }
 
+.sideInfoHover {
+  opacity: 0;
+}
+
+.opacityInfoHover:hover, .opacityInfoHover:active {
+  opacity: 1;
+}
 
