@@ -38,7 +38,7 @@ $(() => {
   }); //api verification
 
   $(".toggleLogin").click(function() {
-    $(".loginForm").slideToggle();
+    $(".loginForm").slideDown();
   });
 
   $(".toggleWatch").click(function() {

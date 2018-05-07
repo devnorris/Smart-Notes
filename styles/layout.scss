@@ -4,13 +4,17 @@
   min-height: 100%;
   padding: 0;
   margin: 0;
-  background-image: url("../Images/BG.jpg");
+  background-image: url("../Images/tea.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
-
 
 html {
   box-sizing: border-box;
 }
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
@@ -43,32 +47,41 @@ html {
   margin: auto;
   height: 5em;
   background-color: #f2f2f2;
-  border: 2px solid #292c2f;
   color: black;
 }
 
+
+.btn-group-lg>.btn, .btn-lg {
+    padding: 10px 16px;
+    font-size: 25px;
+    line-height: 1.3333333;
+
+}
 
 button.submit:hover, button.submit:active {
   background-color: #5c6f88;
 }
 
 .jumbotron{
-    background-color:#273c5f;
-    color:white;
+    background-color: #949495;
+    color:#414043;
+    opacity: .95;
 }
 
 
 .well {
-  text-align: center;
-    color:#273c5f;
+    text-align: center;
+    background-color:#cecece;
+    opacity: .9;
+    color: #414043;
+    border: none;
 }
 
 
 .img-rounded {
-  height: 30em;
-  width: 30em;
-  margin-right: 18px;
-  opacity: 0.6;
+  height: 20em;
+  width: 20em;
+  opacity: 0.75;
 }
 
 .img-rounded:hover, .img-rounded:active {
@@ -77,6 +90,15 @@ button.submit:hover, button.submit:active {
 
 .displayContainer {
   background-color: white;
-  color: #273c5f;
-  width: 30em;
+  color: #414043;
+  width: 90%;
+  background-color: #f5f5f5
+}
+
+.container {
+  width: 75%;
+}
+
+.register {
+  font-size: 2em;
 }
