@@ -2,93 +2,70 @@
 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Smart To-Do</title>
-
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width = device-width, initial-scale = 1">
+  <title>Smart To-Do</title>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-
   <script type="text/javascript" src="/scripts/app.js"></script>
-
 </head>
-
 <body>
-
-
   <% include partials/_header %>
   <div class="container">
-
     <div class="jumbotron" align="center">
       <h1>Smart To-Do</h1>
       <h3 id="introText">Quick! Type in the cool thing/place before you forget! We'll take care of sorting it.</p></h3>
-
       <form class="submitTodo"method="POST" action="/smart">
-
         <input class="search" name="search" autofocus>
         <br>
         <br>
         <a href="#" class = "btn btn-default btn-lg" role="button">Sort for me, machine!</a>
       </form>
-
     </div>
-
-    </div>
-
-<div class="container">
-
-<div class="well">
-<h4>Simply type in a word or two above, and be amazed as the Smart To-Do app categorizes your words into the correct list!</h4>
-</div>
-
-<br>
-
-
-<div class="jumbotron" align="center">
-<div class="container-fluid">
-  <div class="row">
-
-    <div class="col-sm-3">
-      <img src="../Images/Watch.jpeg" class="img-rounded">
-      <div class="watchDisplay">To Watch</div>
-
-    </div>
-
-    <div class="col-sm-3">
-      <img src="../Images/food.jpeg" class="img-rounded">
-      <div class="foodDisplay">To Eat</div>
-
-    </div>
-
-
-    <div class="col-sm-3">
-      <img src="../Images/Products.jpeg" class="img-rounded">
-      <div class="merchDisplay">To Buy</div>
-
-    </div>
-
-
-    <div class="col-sm-3">
-      <img src="../Images/books.jpeg" class="img-rounded">
-      <div class="bookDisplay">To Read</div>
-
-    </div>
-
   </div>
-</div>
-
-
-</body>
-
+  <div class="container">
+    <div class="well">
+      
+      <h4>Simply type in a word or two above, and be amazed as the Smart To-Do app categorizes your words into the correct list!</h4>
+    </div>
+    <br>
+    <div class="jumbotron" align="center">
+      <div class="container-fluid">
+        <div class="row">
+          
+          <div class="col-sm-3">
+            <img src="../Images/Watch.jpeg" class="img-rounded">
+            <div class="watchDisplay">To Watch</div>
+            
+          </div>
+          
+          <div class="col-sm-3">
+            <img src="../Images/food.jpeg" class="img-rounded">
+            <div class="foodDisplay">To Eat</div>
+            
+          </div>
+          
+          <div class="col-sm-3">
+            <img src="../Images/Products.jpeg" class="img-rounded">
+            <div class="merchDisplay">To Buy</div>
+            
+          </div>
+          
+          <div class="col-sm-3">
+            <img src="../Images/books.jpeg" class="img-rounded">
+            <div class="bookDisplay">To Read</div>
+            
+          </div>
+          
+        </div>
+      </div>
+      
+  </body>
 </html>
-
-
-
+    
+    
+    
+    
