@@ -57,5 +57,4 @@ $(() => {
   $(".toggleRead").click(function() {
     $(".displayRead").slideToggle();
   });
-
 }); //doc ready
