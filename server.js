@@ -111,6 +111,11 @@ app.post("/smart", (req, res) => {
       .then(response => {
         let businessList = response.data.businesses;
         console.log(businessList[0].name);
+
+
+        foodResults.value = businessList[0].name;
+        console.log(businessList[0].name);
+
       })
       .catch(error => {
         console.log("Error!");
@@ -133,6 +138,8 @@ app.post("/smart", (req, res) => {
           let movieArray = result.results;
           for (let searchResult of movieArray) {
             if (searchResult.title.toLowerCase() === taskAdded.toLowerCase()) {
+
+              watchResult.value = searchResult.title + " " + searchResult.year;
               console.log("caught", searchResult.title);
             }
           }
