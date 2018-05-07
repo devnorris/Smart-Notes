@@ -11,7 +11,6 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const imdb = require("imdb-api");
 const axios = require("axios");
-
 const ebay = require("ebay-api");
 const flash = require("express-flash-messages");
 const yelpKey = process.env.yelpKey;
@@ -26,6 +25,7 @@ const imports = require("./data-helpers.js");
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const loginRoutes = require("./routes/login");
 const yelpConfig = {
   headers: { Authorization: yelpKey },
   params: {
@@ -64,17 +64,12 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
+// app.use(loginRoutes);
 
 // Home page
 app.get("/", (req, res) => {
   let ejsVars = { user: req.session.user };
-  req.flash("notify", "This is a test notification.");
-  res.render("index", {
-    user: req.currentUser,
-    info: req.flash("info"),
-    errors: req.flash("errors"),
-    ejsVars
-  });
+  res.render("index", ejsVars);
 });
 
 app.get("/register", (req, res) => {
@@ -88,6 +83,12 @@ app.post("/register", (req, res) => {
     .insert({
       email: req.body.email,
       password: req.body.password
+    })
+    .then(console.log("done"))
+    .catch(err => console.log("error: ", err));
+  knex("todo")
+    .insert({
+      user_id: 1
     })
     .then(console.log("done"))
     .catch(err => console.log("error: ", err));
@@ -118,7 +119,16 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/smart", (req, res) => {
-  let ejsVars = { user: req.session.user };
+  let ejsVars = { user: req.session.user, todoName: "", todoRef: "" };
+  knex("todo")
+    .where({ user_id: 1 })
+    .then(response => {
+      for (let objects of response) {
+        ejsVars.todoName = objects.todo_name;
+        ejsVars.todoRef = objects.todo_reference;
+        console.log("added obj ", ejsVars);
+      }
+    });
   console.log("vars", ejsVars);
   res.render("usersHome", ejsVars);
 });
@@ -147,15 +157,10 @@ app.post("/smart", (req, res) => {
         knex("todo") // knex call to add api item to todo_reference
           .insert({
             todo_name: `${responseObj.keyword} ${responseObj.value}`,
-            todo_reference: `${businessList[0].name}, ${
-              businessList[0].rating
-            }, ${businessList[0].location.address1}`
+            todo_reference: `${businessList[0].name}`
           })
           .then(console.log("done"))
           .catch(err => console.log("error: ", err));
-      })
-      .catch(error => {
-        console.log("Error!");
       });
   } //if eat
   // // ----------------------------------------------------------------------------------------------------------
@@ -173,21 +178,16 @@ app.post("/smart", (req, res) => {
         )
         .then(result => {
           let movieArray = result.results;
-          //console.log(movieArray);
 
-          if (movieArray[0].title.toLowerCase() === taskAdded.toLowerCase()) {
-            console.log(`${movieArray[0].title}, ${movieArray[0].year}`);
-
-            knex("todo") // knex call to add api item to todo_reference
-              .insert({
-                todo_name: `${responseObj.keyword} ${responseObj.value}`,
-                todo_reference: `${movieArray[0].title}, ${movieArray[0].year}`
-              })
-              .then(console.log("done"))
-              .catch(err => console.log("error: ", err));
-          }
-        })
-        .catch(console.log);
+          knex("todo") // knex call to add api item to todo_reference
+            .insert({
+              todo_name: `${responseObj.keyword} ${responseObj.value}`,
+              todo_reference: `${movieArray[0].title}, ${movieArray[0].year}`,
+              user_id: 1
+            })
+            .then(console.log("done"))
+            .catch(err => console.log("error: ", err));
+        });
     }; //else if watch
 
     findMovie(taskAdded);
@@ -246,22 +246,13 @@ app.post("/smart", (req, res) => {
         knex("todo") // knex call to add api item to todo_reference
           .insert({
             todo_name: `${responseObj.keyword} ${responseObj.value}`,
-            todo_reference: `${items[0].title}, ${
-              items[0].sellingStatus.currentPrice.amount
-            }`
+            todo_reference: `${items[0].title}`
           })
           .then(console.log("done"))
           .catch(err => console.log("error: ", err));
       }
     );
   } //else if buy
-
-  // knex("todo")
-  //     .insert({
-  //       todo_name: `${responseObj.keyword} ${responseObj.value}`
-  //     })
-  //     .then(console.log("done"))
-  //     .catch(err => console.log("error: ", err))
 
   knex("category")
     .insert({

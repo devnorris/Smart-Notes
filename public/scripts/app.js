@@ -38,7 +38,7 @@ $(() => {
     });
   }); //api verification
 
-  $(".login").on("click", function() {
+  $(".toggleLogin").on("click", function() {
     $(".loginForm").slideToggle();
   });
 
@@ -57,5 +57,4 @@ $(() => {
   $(".toggleRead").click(function() {
     $(".displayRead").slideToggle();
   });
-
 }); //doc ready
