@@ -209,7 +209,8 @@ app.post("/smart", (req, res) => {
       // gets all the items together in a merged array
       function itemsCallback(error, itemsResponse) {
         let items = itemsResponse.searchResult.item;
-        res.json("ebay book ", ebay.xmlRequest);
+        responseObj.bookResults = items;
+        res.json(responseObj);
 
         if (error) throw error;
         knex("todo") // knex call to add api item to todo_reference

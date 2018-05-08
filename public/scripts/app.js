@@ -43,9 +43,17 @@ $(() => {
               .append($(`<li>${result.keyword} ${result.value}</li>`))
               .hide()
               .fadeIn(800, function() {});
-          } else if (result.keyword === "read") {
+          } else if (result.keyword === "read" || result.keyword === "lire") {
             $(".bookDisplay")
-              .append($(`<li>${result.keyword} ${result.value}</li>`))
+              .append(
+                $(
+                  `<li class="bookResults"><a href="https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR0.TRC0.H0.X391665377317.TRS0&_nkw=${
+                    result.bookResults[0].itemId
+                  }&_sacat=0">${result.bookResults[0].title} (${
+                    result.bookResults[0].primaryCategory.categoryName
+                  })</a></li>`
+                )
+              )
               .hide()
               .fadeIn(800, function() {});
           }
