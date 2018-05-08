@@ -22,7 +22,6 @@ const knex = require("knex")(knexConfig[ENV]);
 const morgan = require("morgan");
 const knexLogger = require("knex-logger");
 const imports = require("./data-helpers.js");
-
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
@@ -74,7 +73,6 @@ app.get("/", (req, res) => {
 
 app.get("/register", (req, res) => {
   let ejsVars = { user: req.session.user };
-
   res.render("register", ejsVars);
 });
 
@@ -126,10 +124,10 @@ app.get("/smart", (req, res) => {
       for (let objects of response) {
         ejsVars.todoName = objects.todo_name;
         ejsVars.todoRef = objects.todo_reference;
-        console.log("added obj ", ejsVars);
+        // console.log("added obj ", ejsVars);
       }
     });
-  console.log("vars", ejsVars);
+  // console.log("vars", ejsVars);
   res.render("usersHome", ejsVars);
 });
 
@@ -141,19 +139,15 @@ app.post("/smart", (req, res) => {
     .join(" ")
     .toLowerCase();
   let responseObj = { keyword: anchorWord, value: taskAdded };
-  if (anchorWord === "eat") {
+  if (anchorWord === "eat" || anchorWord === "manger") {
     yelpConfig.params.term = taskAdded; // Find restaurants
 
     axios
       .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
       .then(response => {
         let businessList = response.data.businesses;
-        console.log(
-          `${businessList[0].name}, ${businessList[0].rating}, ${
-            businessList[0].location.address1
-          }`
-        );
-
+        responseObj.foodResults = businessList;
+        res.json(responseObj);
         knex("todo") // knex call to add api item to todo_reference
           .insert({
             todo_name: `${responseObj.keyword} ${responseObj.value}`,
@@ -164,7 +158,8 @@ app.post("/smart", (req, res) => {
       });
   } //if eat
   // // ----------------------------------------------------------------------------------------------------------
-  else if (anchorWord === "watch") {
+  else if (anchorWord === "watch" || anchorWord == "regarder") {
+    console.log("watch executed");
     const findMovie = search => {
       // Find movies
       imdb
@@ -177,8 +172,9 @@ app.post("/smart", (req, res) => {
           }
         )
         .then(result => {
+          responseObj.movieResult = result;
+          res.json(responseObj); //entire result of API, tested and functionnal
           let movieArray = result.results;
-
           knex("todo") // knex call to add api item to todo_reference
             .insert({
               todo_name: `${responseObj.keyword} ${responseObj.value}`,
@@ -191,7 +187,7 @@ app.post("/smart", (req, res) => {
     }; //else if watch
 
     findMovie(taskAdded);
-  } else if (anchorWord === "read") {
+  } else if (anchorWord === "read" || anchorWord === "lire") {
     const paramsBooks = {
       keywords: `${taskAdded}, Books`, // Search Ebay for Books
       domainFilter: [{ name: "domainName", value: "Books" }]
@@ -207,22 +203,22 @@ app.post("/smart", (req, res) => {
       },
       // gets all the items together in a merged array
       function itemsCallback(error, itemsResponse) {
-        if (error) throw error;
-
         let items = itemsResponse.searchResult.item;
+        responseObj.bookResults = items;
+        res.json(responseObj);
 
-        console.log(items[0].title);
-
+        if (error) throw error;
         knex("todo") // knex call to add api item to todo_reference
           .insert({
             todo_name: `${responseObj.keyword} ${responseObj.value}`,
             todo_reference: `${items[0].title}`
           })
           .then(console.log("done"))
+
           .catch(err => console.log("error: ", err));
       }
     ); //ebay api call
-  } else if (anchorWord === "buy") {
+  } else if (anchorWord === "buy" || anchorWord === "acherter") {
     const paramsProduct = {
       keywords: taskAdded, // Search Ebay for products
       domainFilter: [{ name: "domainName", value: "Books" }]
@@ -241,7 +237,8 @@ app.post("/smart", (req, res) => {
         if (error) throw error;
 
         let items = itemsResponse.searchResult.item;
-        console.log(items[0]);
+        responseObj.merchResults = items;
+        res.json(responseObj);
 
         knex("todo") // knex call to add api item to todo_reference
           .insert({
@@ -261,7 +258,7 @@ app.post("/smart", (req, res) => {
     .then(console.log("done"))
     .catch(err => console.log("error: ", err));
 
-  res.send(responseObj);
+  // res.json(responseObj);
 }); //post "/smart"
 
 app.post("/logout", (req, res) => {

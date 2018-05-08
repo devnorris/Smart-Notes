@@ -14,23 +14,22 @@
     a {
       text-decoration: none;
     }
-    button:hover {
-      filter: invert(100%)
-    }
+   
   </style>
 </head>
 <span class=headerSpan>
   <nav class="nav" style="margin-bottom: 20px;">
     <% if(user) { %>
-      Welcome back <span style="color: rgb(0, 255, 115); font-size: 18px; font-weight: bolder"<b><%=user%></b> :)
+      Welcome back <span style="color: rgb(255, 187, 0); font-size: 18px; font-weight: bolder"<b><%=user%></b> :)
       <form action="/logout" method="POST" style="float: right;">
-        <button type="submit" style="background-color: rgb(140, 187, 139);">Logout</span>
+        <button type="submit">Logout</span>
         </form>
-      </nav >
+      </nav>
       <%} else {%>
         <div class="jumbotron" align="center">
-          <h1 style="font-family: 'Great Vibes', cursive;">Smart Note</h1>
-          <h3 id="introText">Quick! <a href="/register" style="color: rgb(0, 255, 115);"> register</a> before you forget what you wanted to jot down! We'll take care of sorting it.</p></h3>
+            <span class="smartnote"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD5SURBVGhD7ZSxDUJBDMX+EgzAcKzEPOzEAMCTrFQu0gRdEUuuXuE0d9eyLMuZ3B6vj8l8PnZ8ZC7uz/fnH5LrY8dH5sJiE5LrY8dH5sJiE5LrY8dH5sJiE5LrY8dH5mVZTscecGQ+Hzs+Mhf25U1Iro8dH5kLi01Iro8dH5kLi01Iro8dH5kLi01Iro8dH5mXZTkde8CR+Xzs+Mhc2Jc3Ibk+dnxkLiw2Ibk+dnxkLiw2Ibk+dnxkLiw2Ibk+dnxkXpbldOwBR+bzseMjc2Ff3oTk+tjxkbmw2ITk+tjxkbmw2ITk+tjxkbmw2ITk+tjxkXlZlmX5cV1fdDuS/HJSJzQAAAAASUVORK5CYII="> 
+              Smart Note</span>
+          <h3 id="introText">Quick! <a id="link" href="/register"> register</a> before you forget what you wanted to jot down! We'll take care of sorting it.</p></h3>
         </div>
       </div>
       
