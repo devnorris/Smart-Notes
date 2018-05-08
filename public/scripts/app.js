@@ -8,15 +8,17 @@ $(() => {
         method: "POST",
         data: formData,
         success: function(result) {
-          console.log("resulte: ", result);
+          console.log("resulte: ", result.foodResults[0].url);
           // result.results[0].title
           if (result.keyword === "eat" || result.keyword === "manger chez") {
             $(".foodDisplay")
               .append(
                 $(
-                  `<li class="foodResults">${result.keyword} ${
-                    result.value
-                  }</li>`
+                  `<li class="foodResults"><a href="${
+                    result.foodResults[0].url
+                  }">${result.foodResults[0].name}-(${
+                    result.foodResults[0].location.address1
+                  })</a></li>`
                 )
               )
               .hide()
@@ -38,9 +40,17 @@ $(() => {
               )
               .hide()
               .fadeIn(800, function() {});
-          } else if (result.keyword === "buy") {
+          } else if (result.keyword === "buy" || result.keyword === "acheter") {
             $(".merchDisplay")
-              .append($(`<li>${result.keyword} ${result.value}</li>`))
+              .append(
+                $(
+                  `<li class="merchResults"><a href="https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR0.TRC0.H0.X391665377317.TRS0&_nkw=${
+                    result.merchResults[0].itemId
+                  }&_sacat=0">${result.merchResults[0].title}, ${
+                    result.merchResults[0].primaryCategory.categoryName
+                  }</a></li>`
+                )
+              )
               .hide()
               .fadeIn(800, function() {});
           } else if (result.keyword === "read" || result.keyword === "lire") {
@@ -71,18 +81,18 @@ $(() => {
   });
 
   $(".toggleWatch").click(function() {
-    $(".watchDisplay").slideToggle();
+    $(".watchResults").slideToggle();
   });
 
   $(".toggleEat").click(function() {
-    $(".displayEat").slideToggle();
+    $(".foodResults").slideToggle();
   });
 
-  $(".toggleBuy").click(function() {
-    $(".displayBuy").slideToggle();
+  $(".toggleMerch").click(function() {
+    $(".merchResults").slideToggle();
   });
 
   $(".toggleRead").click(function() {
-    $(".displayRead").slideToggle();
+    $(".bookResults").slideToggle();
   });
 }); //doc ready

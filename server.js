@@ -139,20 +139,15 @@ app.post("/smart", (req, res) => {
     .join(" ")
     .toLowerCase();
   let responseObj = { keyword: anchorWord, value: taskAdded };
-  if (anchorWord === "eat at" || anchorWord === "manger chez") {
+  if (anchorWord === "eat" || anchorWord === "manger") {
     yelpConfig.params.term = taskAdded; // Find restaurants
 
     axios
       .get("https://api.yelp.com/v3/businesses/search", yelpConfig)
       .then(response => {
         let businessList = response.data.businesses;
-        res.json(
-          responseObj,
-          `${businessList[0].name}, ${businessList[0].rating}, ${
-            businessList[0].location.address1
-          }`
-        );
-
+        responseObj.foodResults = businessList;
+        res.json(responseObj);
         knex("todo") // knex call to add api item to todo_reference
           .insert({
             todo_name: `${responseObj.keyword} ${responseObj.value}`,
@@ -223,7 +218,7 @@ app.post("/smart", (req, res) => {
           .catch(err => console.log("error: ", err));
       }
     ); //ebay api call
-  } else if (anchorWord === "buy") {
+  } else if (anchorWord === "buy" || anchorWord === "acherter") {
     const paramsProduct = {
       keywords: taskAdded, // Search Ebay for products
       domainFilter: [{ name: "domainName", value: "Books" }]
@@ -242,7 +237,8 @@ app.post("/smart", (req, res) => {
         if (error) throw error;
 
         let items = itemsResponse.searchResult.item;
-        // res.json("ebay merchandise ", itemsResponse);
+        responseObj.merchResults = items;
+        res.json(responseObj);
 
         knex("todo") // knex call to add api item to todo_reference
           .insert({
