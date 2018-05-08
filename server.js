@@ -139,9 +139,7 @@ app.post("/smart", (req, res) => {
     .join(" ")
     .toLowerCase();
   let responseObj = { keyword: anchorWord, value: taskAdded };
-  if (anchorWord === "eat") {
-    console.log("eat executed");
-
+  if (anchorWord === "eat at" || anchorWord === "manger chez") {
     yelpConfig.params.term = taskAdded; // Find restaurants
 
     axios
@@ -149,10 +147,10 @@ app.post("/smart", (req, res) => {
       .then(response => {
         let businessList = response.data.businesses;
         res.json(
-          "response is hurrr"
-          // `${businessList[0].name}, ${businessList[0].rating}, ${
-          //   businessList[0].location.address1
-          // }`
+          responseObj,
+          `${businessList[0].name}, ${businessList[0].rating}, ${
+            businessList[0].location.address1
+          }`
         );
 
         knex("todo") // knex call to add api item to todo_reference
@@ -179,7 +177,8 @@ app.post("/smart", (req, res) => {
           }
         )
         .then(result => {
-          res.json(result); //entire result of API, tested and functionnal
+          responseObj.movieResult = result;
+          res.json(responseObj); //entire result of API, tested and functionnal
           let movieArray = result.results;
           knex("todo") // knex call to add api item to todo_reference
             .insert({
@@ -262,7 +261,7 @@ app.post("/smart", (req, res) => {
     .then(console.log("done"))
     .catch(err => console.log("error: ", err));
 
-  // res.send(responseObj);
+  // res.json(responseObj);
 }); //post "/smart"
 
 app.post("/logout", (req, res) => {

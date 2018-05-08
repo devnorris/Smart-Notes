@@ -8,14 +8,34 @@ $(() => {
         method: "POST",
         data: formData,
         success: function(result) {
-          if (result.keyword === "eat") {
+          console.log("resulte: ", result);
+          // result.results[0].title
+          if (result.keyword === "eat" || result.keyword === "manger chez") {
             $(".foodDisplay")
-              .append($(`<li>${result.keyword} ${result.value}</li>`))
+              .append(
+                $(
+                  `<li class="foodResults">${result.keyword} ${
+                    result.value
+                  }</li>`
+                )
+              )
               .hide()
               .fadeIn(800, function() {});
-          } else if (result.keyword === "watch") {
+          } else if (
+            result.keyword === "watch" ||
+            result.keyword === "regarder"
+          ) {
             $(".watchDisplay")
-              .append($(`<li>${result.keyword} ${result.value}</li>`))
+              .append(
+                $(
+                  `<li class="watchResults"><a href="https://www.imdb.com/title/${
+                    result.movieResult.results[0].imdbid
+                  }/"">
+                 ${result.movieResult.results[0].title}(${
+                    result.movieResult.results[0].year
+                  }).</a></li>`
+                )
+              )
               .hide()
               .fadeIn(800, function() {});
           } else if (result.keyword === "buy") {
@@ -43,7 +63,7 @@ $(() => {
   });
 
   $(".toggleWatch").click(function() {
-    $(".displayWatch").slideToggle();
+    $(".watchDisplay").slideToggle();
   });
 
   $(".toggleEat").click(function() {
