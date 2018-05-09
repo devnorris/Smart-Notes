@@ -22,9 +22,7 @@ html {
 nav {
   padding: 15px;
   background-color: rgba(255, 228, 181, 0.075);
-
 }
-
 
 .welcome {
   width: 40%;
@@ -64,11 +62,12 @@ nav {
 }
 
 button {
-  background-color: rgb(255, 255, 255);
+  background-color: white;
   border: 1px solid;
   border-radius: 3px;
   border-color: olive;
 }
+
 .jumbotron {
   background-color: #ced0602f;
   color: #7c7b80;
@@ -86,13 +85,13 @@ button {
 
 .smartnote {
   display: inline-block;
-  color: rgb(180, 180, 180);
+  color: #b4b4b4;
   font-size: 3em;
   font-weight: bold;
   font-family: great vibes, cursive;
 }
 
-.smartnote img{
+.smartnote img {
   filter: hue-rotate(190deg);
   opacity: .6;
 }
@@ -109,14 +108,14 @@ button {
   border-color: #ffcb77;
 }
 
-#sort{
+#sort {
   color: palegoldenrod;
 }
 
 #sort:hover {
   border-bottom: 3px solid;
   border-bottom-color: #f3863d;
-  color: rgb(192, 166, 122);
+  color: #c0a67a;
   filter: invert(0);
 }
 
@@ -147,6 +146,25 @@ button {
   border-bottom: 3px solid;
   border-bottom-color: #f3863d;
   filter: brightness(1.3);
+}
+
+#to-watch, #to-read, #to-buy, #to-eat{
+  background-color: rgba(206, 168, 0, 0.568);
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  font-weight: bolder;
+  width: 140px;
+  border-radius: 2px;
+}
+
+.watchResults, .merchResults, .bookResults, .foodResults{
+  color: rgb(172, 157, 157); 
+  background-color: #fffef2;
+  border-left: 1px solid;
+  border-bottom-color: rgb(141, 127, 127);
+  border-radius: 2px;
+  padding: 2px;
+  margin-top: 5px;
 }
 
 .img-rounded {
