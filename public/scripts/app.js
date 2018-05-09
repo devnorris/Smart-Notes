@@ -1,5 +1,7 @@
 $(() => {
-  $(".submitTodo").on("submit", function(event) {
+  // <!-- LATEST COMMIT MAY 9t. THIS MSg coNfirMs you Have aCCESS tO appending -->
+
+  let previousentries = $(".submitTodo").on("submit", function(event) {
     const formData = $("form").serialize();
     event.preventDefault();
     $.get("/smart", function(response) {
@@ -8,8 +10,6 @@ $(() => {
         method: "POST",
         data: formData,
         success: function(result) {
-          console.log("resulte: ", result.foodResults[0].url);
-          // result.results[0].title
           if (result.keyword === "eat" || result.keyword === "manger chez") {
             $(".foodDisplay")
               .append(
@@ -45,7 +45,7 @@ $(() => {
               .append(
                 $(
                   `<li class="merchResults"><a href="https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR0.TRC0.H0.X391665377317.TRS0&_nkw=${
-                    result.merchResults[0].itemId
+                    result.value
                   }&_sacat=0">${result.merchResults[0].title}, ${
                     result.merchResults[0].primaryCategory.categoryName
                   }</a></li>`
