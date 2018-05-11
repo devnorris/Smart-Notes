@@ -6,55 +6,90 @@
   <% include partials/_header %>
   <div class="container">
     <div class="jumbotron" align="center">
-        <span class="smartnote"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD5SURBVGhD7ZSxDUJBDMX+EgzAcKzEPOzEAMCTrFQu0gRdEUuuXuE0d9eyLMuZ3B6vj8l8PnZ8ZC7uz/fnH5LrY8dH5sJiE5LrY8dH5sJiE5LrY8dH5sJiE5LrY8dH5mVZTscecGQ+Hzs+Mhf25U1Iro8dH5kLi01Iro8dH5kLi01Iro8dH5kLi01Iro8dH5mXZTkde8CR+Xzs+Mhc2Jc3Ibk+dnxkLiw2Ibk+dnxkLiw2Ibk+dnxkLiw2Ibk+dnxkXpbldOwBR+bzseMjc2Ff3oTk+tjxkbmw2ITk+tjxkbmw2ITk+tjxkbmw2ITk+tjxkXlZlmX5cV1fdDuS/HJSJzQAAAAASUVORK5CYII="> 
-          Smart Note</span>
-      <h3 id="introText"> </h3>Quick! Type in the cool thing/place before you forget! We'll take care of sorting it.</h3>
-      <form class="submitTodo"method="POST" action="/smart">
-        <input class="search" name="search" autofocus>
-        <br>
-        <a href="#" class = "btn btn-default btn-lg" id="sort" role="button">Sort for me, machine!</a>
-      </form>
-    </div>
-  </div>
-  <div class="container">
-    <div class="well">
-      <h4>Simply type in a word or two above, and be amazed as the Smart To-Do app categorizes your words into the correct list!</h4>
-    </div>
-    <br>
-    <div class="jumbotron" align="center" id="picture-categories">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-3" id="watch">
-            <img class="toggleWatch" src="../Images/Watch.jpeg" class="img-rounded" style="height:10em; width: 10em">
-            <div class="watchDisplay"><p id="to-watch">To Watch</p></div>
-            <div class="displayWatch" style="display:none">
-              <br>
-              <div class="displayContainer">
-              </div>
-            </div>
-            </div>
-          <div class="col-sm-3">
-            <img class="toggleEat" src="../Images/food.jpeg" class="img-rounded" style="height:10em; width: 10em">
-            <div class="foodDisplay"><p id="to-eat">To Eat</p></div>
-            <div class="displayEat" style="display:none">
-              <br>
-              <div class="displayContainer">
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <img class="toggleMerch" src="../Images/Products.jpeg" class="img-rounded" style="height:10em; width: 10em">
-            <div class="merchDisplay"><p id="to-buy">To Buy</p></div>
-          </div>
-          <div class="col-sm-3">
-            <img class="toggleRead" src="../Images/books.jpeg" class="img-rounded" >
-            <div class="bookDisplay"><p id="to-read">To Read</p></div>
-          </div>
-        </div>
+      <span class="smartnote"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD5SURBVGhD7ZSxDUJBDMX+EgzAcKzEPOzEAMCTrFQu0gRdEUuuXuE0d9eyLMuZ3B6vj8l8PnZ8ZC7uz/fnH5LrY8dH5sJiE5LrY8dH5sJiE5LrY8dH5sJiE5LrY8dH5mVZTscecGQ+Hzs+Mhf25U1Iro8dH5kLi01Iro8dH5kLi01Iro8dH5kLi01Iro8dH5mXZTkde8CR+Xzs+Mhc2Jc3Ibk+dnxkLiw2Ibk+dnxkLiw2Ibk+dnxkLiw2Ibk+dnxkXpbldOwBR+bzseMjc2Ff3oTk+tjxkbmw2ITk+tjxkbmw2ITk+tjxkbmw2ITk+tjxkXlZlmX5cV1fdDuS/HJSJzQAAAAASUVORK5CYII="> 
+        Smart Note</span>
+        <h3 id="introText"> </h3>Quick! Type in the cool thing/place before you forget! We'll take care of sorting it.</h3>
+        <form class="submitTodo"method="POST" action="/smart">
+          <input class="search" name="search" autofocus>
+          <br>
+          <a href="#" class = "btn btn-default btn-lg" id="sort" role="button">Sort for me, machine!</a>
+        </form>
       </div>
-  </body>
-</html>
-    
-    
-    
-    
+    </div>
+    <div class="container">
+      <div class="well">
+        <h4>Simply type in a word or two above, and be amazed as the Smart To-Do app categorizes your words into the correct list!</h4>
+      </div>
+      <br>
+      <div class="jumbotron" align="center" id="picture-categories">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-3" id="watch">
+              <img class="toggleWatch" src="../Images/Watch.jpeg" class="img-rounded" style="height:10em; width: 10em">
+              <div class="watchDisplay"><p id="to-watch">To Watch</p>
+                <% for(result of dbArray.slice(1)){ %>
+                  <%if(result.todo_name.split(" ")[0] === "watch"){%>
+                    <li class="watchResults">
+                      <b><%= result.todo_name %></b>
+                      <br>
+                      <%=result.todo_reference%>
+                    </li>
+                    <%}}%>
+                  </div>
+                  <div class="displayWatch" style="display:none">
+                    <br>
+                    <div class="displayContainer">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <img class="toggleEat" src="../Images/food.jpeg" class="img-rounded" style="height:10em; width: 10em">
+                  <div class="foodDisplay"><p id="to-eat">To Eat</p></div>
+                  <% for(result of dbArray.slice(1)){ %>
+                    <%if(result.todo_name.split(" ")[0] === "eat"){%>
+                      <li class="foodResults">
+                        <b><%= result.todo_name %></b>
+                        <br>
+                        <%=result.todo_reference%>
+                      </li>
+                      <%}}%>
+                      <div class="displayEat" style="display:none">
+                        <br>
+                        <div class="displayContainer">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <img class="toggleMerch" src="../Images/Products.jpeg" class="img-rounded" style="height:10em; width: 10em">
+                      <div class="merchDisplay"><p id="to-buy">To Buy</p>
+                        <% for(result of dbArray.slice(1)){ %>
+                          <%if(result.todo_name.split(" ")[0] === "buy"){%>
+                            <li class="merchResults">
+                              <b><%= result.todo_name %></b>
+                              <br>
+                              <%=result.todo_reference%>
+                            </li>
+                            <%}}%></div>
+                          </div>
+                          <div class="col-sm-3">
+                            <img class="toggleRead" src="../Images/books.jpeg" class="img-rounded" >
+                            <div class="bookDisplay">
+                              <p id="to-read">To Read</p>
+                              <% for(result of dbArray.slice(1)){ %>
+                                <%if(result.todo_name.split(" ")[0] === "read"){%>
+                                  <li class="bookResults">
+                                    <b><%= result.todo_name %></b>
+                                    <br>
+                                    <%=result.todo_reference%>
+                                  </li>
+                                  <%}}%>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </body>
+                        </html>
+                        
+                        
+                        
+                        
