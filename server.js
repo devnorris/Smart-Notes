@@ -1,5 +1,4 @@
 "use strict";
-// <!-- LATEST COMMIT MAY 9t. THIS MSg coNfirMs you Have aCCESS tO appending -->
 
 require("dotenv").config();
 
@@ -100,12 +99,11 @@ app.post("/login", (req, res) => {
   knex
     .from("users")
     .then(result => {
-      console.log("why no work?", result);
       for (let user of result) {
         if (user.password !== req.body.Logpassword) {
-          console.log("not you", result);
+          console.log("not you", user);
         } else if (user.email !== req.body.Logemail) {
-          return;
+          console.log("wrong email");
         } else if (
           user.password === req.body.Logpassword &&
           user.email === req.body.Logemail
