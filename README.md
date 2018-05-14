@@ -10,11 +10,11 @@ This is a sample one page application allowing a user to create his own profile 
 
 ## Screenshots 
 
-!["Home page (no user logged in)"](Smart-Notes/public/Images/Homepage.png)
+!["Home page (no user logged in)"](https://github.com/devnorris/Smart-Notes/blob/pull_request/public/Images/Homepage.png)
 
-!["User authentication"](Smart-Notes/public/Images/Authentication.png)
+!["User authentication"](https://github.com/devnorris/Smart-Notes/blob/pull_request/public/Images/Authentication.png)
 
-!["User todo list"](Smart-Notes/public/Images/UserHistory.png)
+!["User todo list"](https://github.com/devnorris/Smart-Notes/blob/pull_request/public/Images/UserHistory.png)
 
 ## Dependencies
 -Axios
