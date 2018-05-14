@@ -1,29 +1,38 @@
-# Node Skeleton
+## Smart Note
 
-## Project Setup
-
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+This is a sample one page application allowing a user to create his own profile and keep track of his to-dos. For the time being it is necessary to use an anchor word to allow our server to sort and categorize, but once development is in it's final stage, simply entering the activity name itself will be enough.
 
 ## Getting Started
-
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information
-3. Install dependencies: `npm i`
-4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Run migrations: `npm run knex migrate:latest`
-  - Check the migrations folder to see what gets created in the DB
-6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
-7. Run the server: `npm run local`
+1. Fix to binaries for sass: `npm rebuild node-sass`
+2. Run migrations: `npm run knex migrate:latest`
+3. Run the server: `npm run local`
 8. Visit `http://localhost:8080/`
 
-## Dependencies
+## Screenshots 
 
+!["Home page (no user logged in)"](https://github.com/devnorris/Smart-Notes/blob/pull_request/public/Images/Homepage.png)
+
+!["User authentication"](https://github.com/devnorris/Smart-Notes/blob/pull_request/public/Images/Authentication.png)
+
+!["User todo list"](https://github.com/devnorris/Smart-Notes/blob/pull_request/public/Images/UserHistory.png)
+
+## Dependencies
+-Axios
+-Body-parser
+-Bootstrap
+-Cookie-parser
+-Cookie-session
+-Dotenv
+-Ebay-api
+-Ejs
+-Express
+-Imdb-api
+-Knex
+-Knex-logger
+-Morgan
 - Node 5.10.x or above
 - NPM 3.8.x or above
+-PG
+-Yelp-api
+
+
