@@ -101,9 +101,7 @@ app.post("/login", (req, res) => {
     .then(result => {
       for (let user of result) {
         if (user.password !== req.body.Logpassword) {
-          console.log("not you", user);
         } else if (user.email !== req.body.Logemail) {
-          console.log("wrong email");
         } else if (
           user.password === req.body.Logpassword &&
           user.email === req.body.Logemail
@@ -122,7 +120,6 @@ app.get("/smart", (req, res) => {
     .where({ user_email: req.session.user })
     .then(response => {
       templateVars.dbArray = response;
-      console.log("info for current user: ", templateVars.dbArray);
       return res.render("usersHome", templateVars);
     });
 });

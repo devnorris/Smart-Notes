@@ -46,10 +46,13 @@
                   <div class="foodDisplay"><p id="to-eat">To Eat</p></div>
                   <% for(result of dbArray.slice(1)){ %>
                     <%if(result.todo_name.split(" ")[0] === "eat"){%>
+                      <%=JSON.stringify(result)%>
                       <li class="foodResults">
+                      <a href= <%=result%>
+                       
                         <b><%= result.todo_name %></b>
                         <br>
-                        <%=result.todo_reference%>
+                        <%=result.todo_reference%></a>
                       </li>
                       <%}}%>
                       <div class="displayEat" style="display:none">
@@ -76,10 +79,10 @@
                               <p id="to-read">To Read</p>
                               <% for(result of dbArray.slice(1)){ %>
                                 <%if(result.todo_name.split(" ")[0] === "read"){%>
-                                  <li class="bookResults">
+                                  <li class="bookResults" ><a href="google.com">
                                     <b><%= result.todo_name %></b>
                                     <br>
-                                    <%=result.todo_reference%>
+                                    <%=result.todo_reference%></a>
                                   </li>
                                   <%}}%>
                                 </div>
