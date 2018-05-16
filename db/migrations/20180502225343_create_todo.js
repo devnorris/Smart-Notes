@@ -4,8 +4,8 @@ exports.up = function(knex, Promise) {
       table.increments("todo_id").primary();
       table.string("todo_name");
       table.string("todo_reference");
-      table.integer("category_id").unsigned();
-      table.integer("user_id").unsigned();
+      table.increments("category_id");
+      table.string("user_email").unsigned();
     })
   ]);
 };

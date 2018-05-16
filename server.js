@@ -1,5 +1,4 @@
 "use strict";
-// <!-- LATEST COMMIT MAY 9t. THIS MSg coNfirMs you Have aCCESS tO appending -->
 
 require("dotenv").config();
 
@@ -87,12 +86,12 @@ app.post("/register", (req, res) => {
     .catch(err => console.log("error: ", err));
   knex("todo")
     .insert({
-      user_id: 1
+      user_email: req.body.email
     })
     .then(console.log("done"))
     .catch(err => console.log("error: ", err));
 
-  req.session.user = req.body.email.split("@")[0];
+  req.session.user = req.body.email;
   res.redirect("/smart");
 });
 
@@ -102,14 +101,14 @@ app.post("/login", (req, res) => {
     .then(result => {
       for (let user of result) {
         if (user.password !== req.body.Logpassword) {
-          console.log("not you");
+          console.log("not you", user);
         } else if (user.email !== req.body.Logemail) {
-          return;
+          console.log("wrong email");
         } else if (
           user.password === req.body.Logpassword &&
           user.email === req.body.Logemail
         ) {
-          req.session.user = req.body.Logemail.split("@")[0];
+          req.session.user = req.body.Logemail;
           res.redirect("/smart");
         }
       }
@@ -118,18 +117,14 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/smart", (req, res) => {
-  let ejsVars = { user: req.session.user, todoName: "", todoRef: "" };
+  let templateVars = { user: req.session.user };
   knex("todo")
-    .where({ user_id: 1 })
+    .where({ user_email: req.session.user })
     .then(response => {
-      for (let objects of response) {
-        ejsVars.todoName = objects.todo_name;
-        ejsVars.todoRef = objects.todo_reference;
-        // console.log("added obj ", ejsVars);
-      }
+      templateVars.dbArray = response;
+      console.log("info for current user: ", templateVars.dbArray);
+      return res.render("usersHome", templateVars);
     });
-  // console.log("vars", ejsVars);
-  res.render("usersHome", ejsVars);
 });
 
 app.post("/smart", (req, res) => {
@@ -151,10 +146,13 @@ app.post("/smart", (req, res) => {
         res.json(responseObj);
         knex("todo") // knex call to add api item to todo_reference
           .insert({
+            user_email: req.session.user,
             todo_name: `${responseObj.keyword} ${responseObj.value}`,
             todo_reference: `${businessList[0].name}`
           })
-          .then(console.log("done"))
+          .then(response => {
+            console.log("food done: ", response);
+          })
           .catch(err => console.log("error: ", err));
       });
   } //if eat
@@ -178,11 +176,11 @@ app.post("/smart", (req, res) => {
           let movieArray = result.results;
           knex("todo") // knex call to add api item to todo_reference
             .insert({
+              user_email: req.session.user,
               todo_name: `${responseObj.keyword} ${responseObj.value}`,
-              todo_reference: `${movieArray[0].title}, ${movieArray[0].year}`,
-              user_id: 1
+              todo_reference: `${movieArray[0].title}, ${movieArray[0].year}`
             })
-            .then(console.log("done"))
+            .then(console.log(" Movies done"))
             .catch(err => console.log("error: ", err));
         });
     }; //else if watch
@@ -211,10 +209,11 @@ app.post("/smart", (req, res) => {
         if (error) throw error;
         knex("todo") // knex call to add api item to todo_reference
           .insert({
+            user_email: req.session.user,
             todo_name: `${responseObj.keyword} ${responseObj.value}`,
             todo_reference: `${items[0].title}`
           })
-          .then(console.log("done"))
+          .then(console.log("Books done"))
 
           .catch(err => console.log("error: ", err));
       }
@@ -222,7 +221,7 @@ app.post("/smart", (req, res) => {
   } else if (anchorWord === "buy" || anchorWord === "acherter") {
     const paramsProduct = {
       keywords: taskAdded, // Search Ebay for products
-      domainFilter: [{ name: "domainName", value: "Books" }]
+      domainFilter: [{ name: "domainName", value: `${taskAdded}` }]
     };
 
     ebay.xmlRequest(
@@ -243,10 +242,11 @@ app.post("/smart", (req, res) => {
 
         knex("todo") // knex call to add api item to todo_reference
           .insert({
+            user_email: req.session.user,
             todo_name: `${responseObj.keyword} ${responseObj.value}`,
             todo_reference: `${items[0].title}`
           })
-          .then(console.log("done"))
+          .then(console.log(" Merch done"))
           .catch(err => console.log("error: ", err));
       }
     );
@@ -258,8 +258,6 @@ app.post("/smart", (req, res) => {
     })
     .then(console.log("done"))
     .catch(err => console.log("error: ", err));
-
-  // res.json(responseObj);
 }); //post "/smart"
 
 app.post("/logout", (req, res) => {
