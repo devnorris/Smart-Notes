@@ -29,7 +29,7 @@ $(() => {
               .append(
                 $(
                   `<li class="watchResults"><a href="https://www.imdb.com/title/${
-                    result.movieResult.results[0].imdbid
+                    result.movieResult.results[0].imdbAid
                   }/"">
                  ${result.movieResult.results[0].title}(${
                     result.movieResult.results[0].year
